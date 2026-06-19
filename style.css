@@ -205,7 +205,8 @@ a { text-decoration: none; color: inherit; }
 
 @media (max-width: 640px) {
   .nav-fifa-btn span { display: none; }
-  .fifa-btn-logo { width: 28px; height: 28px; }
+  .nav-fifa-btn { padding: 0; width: 38px; justify-content: center; }
+  .fifa-btn-logo { width: 30px; height: 30px; }
 }
 
 .download-vcf-btn {
@@ -854,6 +855,9 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
+.project-icon-img { background: none; border: none; padding: 0; }
+.project-icon-img img { width: 100%; height: 100%; object-fit: contain; }
+
 .project-icon {
   width: 52px;
   height: 52px;
@@ -866,6 +870,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 1.3rem;
   color: var(--accent);
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .project-content {
