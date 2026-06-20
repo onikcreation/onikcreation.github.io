@@ -84,8 +84,9 @@
     .btn-edit:hover { border-color: var(--accent); color: var(--accent); }
     .btn-edit.active { background: rgba(56,189,248,0.15); color: var(--accent); border-color: var(--accent); }
 
-    .btn-migrate { background: rgba(167,139,250,0.12); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); }
+    .btn-migrate { background: rgba(167,139,250,0.12); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); display: none; }
     .btn-migrate:hover { background: rgba(167,139,250,0.2); }
+    .btn-migrate.visible { display: inline-flex; }
 
     .btn-logout { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
     .btn-logout:hover { background: rgba(239,68,68,0.2); }
@@ -443,6 +444,7 @@
   import { initializeApp }                    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
   import {
     getAuth, onAuthStateChanged, signOut,
+    browserSessionPersistence, setPersistence,
     EmailAuthProvider, reauthenticateWithCredential
   }                                           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   import {
@@ -474,7 +476,7 @@
         { key: 'title',       label: 'Title',       type: 'text',     required: true, span: 2 },
         { key: 'note',        label: 'Note',        type: 'textarea', span: 2 },
         { key: 'url',         label: 'URL',         type: 'url',      span: 2 },
-        { key: 'description', label: 'Description', type: 'text',     span: 2 },
+        { key: 'description', label: 'Description', type: 'textarea', span: 2 },
         { key: 'category',    label: 'Category',    type: 'text' },
         { key: 'updatedAt',   label: 'Updated',     type: 'ts',       readonly: true }
       ]
@@ -741,12 +743,14 @@
     errEl.textContent = '';
     btn.disabled = true; btn.textContent = 'Verifying…';
     try {
+      await setPersistence(auth, browserSessionPersistence);
       const cred = EmailAuthProvider.credential(currentUser.email, pwd);
       await reauthenticateWithCredential(currentUser, cred);
       hideModal('reauthModal');
       isEditMode = true;
       document.getElementById('editModeBtn').textContent = '👁 View Mode';
       document.getElementById('editModeBtn').classList.add('active');
+      document.getElementById('migrateBtn').classList.add('visible');
       renderTable();
       showToast('Edit Mode enabled', 'success');
     } catch {
@@ -760,6 +764,7 @@
     isEditMode = false;
     document.getElementById('editModeBtn').textContent = '✏️ Edit Mode';
     document.getElementById('editModeBtn').classList.remove('active');
+    document.getElementById('migrateBtn').classList.remove('visible');
     renderTable();
     showToast('View Mode', 'info');
   }
