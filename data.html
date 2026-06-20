@@ -71,12 +71,6 @@
 
     .hdr-right { display: flex; align-items: center; gap: 8px; }
 
-    .session-badge {
-      font-size: 0.72rem; color: var(--muted);
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 20px; padding: 3px 10px;
-    }
-
     .btn-hdr {
       padding: 6px 14px;
       border-radius: 8px; border: none;
@@ -353,7 +347,6 @@
       </div>
     </div>
     <div class="hdr-right">
-      <span class="session-badge" id="sessionBadge">⏱ 30m</span>
       <button class="btn-hdr btn-edit" id="editModeBtn">✏️ Edit Mode</button>
       <button class="btn-hdr btn-logout" id="logoutBtn">⏏ Exit</button>
     </div>
@@ -441,6 +434,7 @@
   import { initializeApp }                    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
   import {
     getAuth, onAuthStateChanged, signOut,
+    browserSessionPersistence, setPersistence,
     EmailAuthProvider, reauthenticateWithCredential
   }                                           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   import {
@@ -463,6 +457,9 @@
   const app  = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db   = getFirestore(app);
+
+  // ব্রাউজার বন্ধ হলে session শেষ হয়ে যাবে
+  setPersistence(auth, browserSessionPersistence);
 
   // ── TAB / COLUMN DEFINITIONS ─────────────
   const TABS = {
@@ -520,40 +517,6 @@
   let unsubs       = {};
   let searchQ      = '';
 
-  // ── SESSION TIMEOUT (30 min) ──────────────
-  const SESSION_MS = 5 * 60 * 1000;
-  let lastActivity = Date.now();
-  let sessionTimer;
-  let warned5      = false;
-
-  function resetActivity() { lastActivity = Date.now(); warned5 = false; }
-  ['click','keydown','mousemove','scroll','touchstart'].forEach(ev =>
-    document.addEventListener(ev, resetActivity, { passive: true })
-  );
-
-  function startSession() {
-    sessionTimer = setInterval(() => {
-      const elapsed   = Date.now() - lastActivity;
-      const remaining = SESSION_MS - elapsed;
-
-      if (remaining <= 0) {
-        clearInterval(sessionTimer);
-        doLogout('timeout');
-        return;
-      }
-
-      const totalSecs = Math.ceil(remaining / 1000);
-      const mm = String(Math.floor(totalSecs / 60)).padStart(2, '0');
-      const ss = String(totalSecs % 60).padStart(2, '0');
-      document.getElementById('sessionBadge').textContent = `⏱ ${mm}:${ss}`;
-
-      if (remaining <= 1 * 60 * 1000 && !warned5) {
-        warned5 = true;
-        showToast('⚠️ Session expires in 1 minute', 'warning');
-      }
-    }, 1000);
-  }
-
   // ── AUTH GATE ─────────────────────────────
   onAuthStateChanged(auth, user => {
     document.getElementById('loadingOverlay').style.display = 'none';
@@ -561,7 +524,6 @@
     currentUser = user;
     document.getElementById('hdrUser').textContent = user.email;
     document.getElementById('app').style.display = 'block';
-    startSession();
     subscribeAll();
     setupUI();
   });
@@ -903,10 +865,8 @@
   }
 
   // ── LOGOUT ────────────────────────────────
-  async function doLogout(reason = '') {
-    clearInterval(sessionTimer);
+  async function doLogout() {
     Object.values(unsubs).forEach(fn => fn?.());
-    if (reason) sessionStorage.setItem('logout-reason', reason);
     await signOut(auth);
     window.location.replace('login.html');
   }
