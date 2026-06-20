@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Data — Onik</title>
+  <link rel="icon" type="image/png" href="assets/OnikLogo.png" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        linear-gradient(135deg, #0f1a3e 0%, #1a0f50 25%, #0a2040 55%, #1a0a3a 80%, #0f1830 100%);
+      --glass:     rgba(255,255,255,0.07);
+      --glass2:    rgba(255,255,255,0.11);
+      --border:    rgba(255,255,255,0.14);
+      --text:      #ffffff;
+      --muted:     rgba(255,255,255,0.5);
+      --accent:    #38bdf8;
+      --accent2:   #a78bfa;
+      --danger:    #ef4444;
+      --success:   #22c55e;
+      --warning:   #f59e0b;
+      --income:    #4ade80;
+      --expense:   #f87171;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    /* ── LOADING ─────────────────────────────── */
+    #loadingOverlay {
+      position: fixed; inset: 0;
+      background: #0a0f2a;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(56,189,248,0.2);
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HEADER ──────────────────────────────── */
+    #appHeader {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,26,62,0.85);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px;
+      height: 54px;
+    }
+
+    .hdr-left { display: flex; align-items: center; gap: 10px; }
+    .hdr-left img { width: 30px; height: 30px; object-fit: contain; }
+    .hdr-title { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
+    .hdr-user  { font-size: 0.72rem; color: var(--muted); }
+
+    .hdr-right { display: flex; align-items: center; gap: 8px; }
+
+    .session-badge {
+      font-size: 0.72rem; color: var(--muted);
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 10px;
+    }
+
+    .btn-hdr {
+      padding: 6px 14px;
+      border-radius: 8px; border: none;
+      font-size: 0.78rem; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-edit { background: var(--glass2); color: var(--text); border: 1px solid var(--border); }
+    .btn-edit:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-edit.active { background: rgba(56,189,248,0.15); color: var(--accent); border-color: var(--accent); }
+
+    .btn-logout { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+    .btn-logout:hover { background: rgba(239,68,68,0.2); }
+
+    /* ── TABS ────────────────────────────────── */
+    .tabs {
+      display: flex; gap: 4px;
+      padding: 12px 20px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,15,42,0.5);
+    }
+
+    .tab-btn {
+      padding: 8px 18px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.2s;
+      position: relative; bottom: -1px;
+    }
+
+    .tab-btn:hover { color: var(--text); background: var(--glass); }
+    .tab-btn.active {
+      color: var(--accent);
+      background: rgba(15,26,62,0.9);
+      border-color: var(--border) var(--border) rgba(15,26,62,0.9);
+    }
+
+    /* ── MAIN ────────────────────────────────── */
+    .main { padding: 16px 20px 40px; max-width: 100%; overflow-x: auto; }
+
+    .toolbar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px; flex-wrap: wrap;
+    }
+
+    .btn-add {
+      padding: 7px 16px;
+      background: linear-gradient(135deg, #38bdf8, #a78bfa);
+      color: #fff; border: none;
+      border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      font-family: inherit; cursor: pointer;
+      display: none; align-items: center; gap: 5px;
+      transition: opacity 0.2s;
+    }
+    .btn-add:hover { opacity: 0.88; }
+
+    .search-input {
+      padding: 7px 12px;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-size: 0.82rem; font-family: inherit;
+      outline: none; width: 200px;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .row-count { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+
+    /* ── TABLE ───────────────────────────────── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+    table.data-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .data-table th {
+      background: rgba(15,26,62,0.8);
+      padding: 10px 12px;
+      text-align: left;
+      color: var(--muted);
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer; user-select: none;
+      transition: color 0.15s;
+    }
+    .data-table th:hover { color: var(--text); }
+    .data-table th.sorted { color: var(--accent); }
+    .data-table th.no-sort { cursor: default; }
+
+    .data-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text);
+      vertical-align: top;
+      max-width: 260px;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.04); }
+
+    .col-num { color: var(--muted); font-size: 0.72rem; width: 40px; text-align: center; }
+    .col-actions { width: 80px; text-align: center; white-space: nowrap; }
+
+    .td-truncate {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 220px; cursor: help;
+    }
+
+    .link-cell {
+      color: var(--accent); text-decoration: none;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      display: block; max-width: 220px;
+    }
+    .link-cell:hover { text-decoration: underline; }
+
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+      text-transform: capitalize;
+    }
+    .badge-income  { background: rgba(74,222,128,0.15); color: var(--income); border: 1px solid rgba(74,222,128,0.3); }
+    .badge-expense { background: rgba(248,113,113,0.15); color: var(--expense); border: 1px solid rgba(248,113,113,0.3); }
+
+    .btn-row {
+      padding: 3px 7px; border: none; border-radius: 5px;
+      cursor: pointer; font-size: 0.78rem;
+      background: transparent; transition: background 0.15s;
+    }
+    .btn-row-edit:hover   { background: rgba(56,189,248,0.15); }
+    .btn-row-delete:hover { background: rgba(239,68,68,0.15); }
+
+    .empty-state {
+      text-align: center; padding: 50px 20px;
+      color: var(--muted); font-size: 0.9rem;
+    }
+
+    /* ── FINANCE SUMMARY ─────────────────────── */
+    .finance-summary {
+      display: none; gap: 12px;
+      margin-top: 14px; flex-wrap: wrap;
+    }
+    .summary-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 20px;
+      display: flex; flex-direction: column; gap: 4px; min-width: 140px;
+    }
+    .summary-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val   { font-size: 1.1rem; font-weight: 700; }
+    .val-income  { color: var(--income); }
+    .val-expense { color: var(--expense); }
+    .val-pos { color: var(--income); }
+    .val-neg { color: var(--expense); }
+
+    /* ── MODALS ──────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.6);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-card {
+      background: rgba(15,26,62,0.97);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .modal-card.modal-lg { max-width: 560px; }
+
+    .modal-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .modal-card p  { font-size: 0.84rem; color: var(--muted); margin-bottom: 16px; }
+
+    .modal-field { margin-bottom: 12px; }
+    .modal-field label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 5px;
+    }
+    .modal-field input,
+    .modal-field textarea,
+    .modal-field select {
+      width: 100%; padding: 9px 12px;
+      background: var(--glass2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-size: 0.85rem; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
+    }
+    .modal-field input:focus,
+    .modal-field textarea:focus,
+    .modal-field select:focus { border-color: var(--accent); }
+    .modal-field textarea { resize: vertical; min-height: 80px; }
+    .modal-field select option { background: #1a0f50; }
+
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+    .modal-fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+
+    .btn-cancel  { padding: 8px 18px; background: var(--glass); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 0.82rem; font-family: inherit; cursor: pointer; }
+    .btn-save    { padding: 8px 18px; background: linear-gradient(135deg, #38bdf8, #a78bfa); color: #fff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 700; font-family: inherit; cursor: pointer; }
+    .btn-danger  { padding: 8px 18px; background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.35); border-radius: 8px; font-size: 0.82rem; font-family: inherit; cursor: pointer; }
+    .btn-confirm { padding: 8px 18px; background: linear-gradient(135deg, #38bdf8, #a78bfa); color: #fff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 700; font-family: inherit; cursor: pointer; }
+
+    .modal-error { margin-top: 10px; font-size: 0.8rem; color: #fca5a5; min-height: 18px; }
+
+    /* ── TOAST ───────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+      padding: 10px 20px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600;
+      opacity: 0; transition: all 0.3s; z-index: 300;
+      white-space: nowrap; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-success { background: rgba(34,197,94,0.2);  border: 1px solid rgba(34,197,94,0.5);  color: #86efac; }
+    .toast-error   { background: rgba(239,68,68,0.2);  border: 1px solid rgba(239,68,68,0.5);  color: #fca5a5; }
+    .toast-warning { background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.5); color: #fcd34d; }
+    .toast-info    { background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.5); color: #7dd3fc; }
+
+    @media (max-width: 600px) {
+      #appHeader { padding: 0 12px; }
+      .hdr-user, .session-badge { display: none; }
+      .tabs { padding: 10px 12px 0; }
+      .tab-btn { padding: 7px 12px; font-size: 0.76rem; }
+      .main { padding: 12px 10px 40px; }
+      .modal-fields-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loadingOverlay"><div class="spinner"></div></div>
+
+<!-- App -->
+<div id="app" style="display:none">
+
+  <!-- Header -->
+  <header id="appHeader">
+    <div class="hdr-left">
+      <a href="index.html"><img src="assets/OnikLogo.png" alt="Onik" /></a>
+      <div>
+        <div class="hdr-title">🔒 Private Data</div>
+        <div class="hdr-user" id="hdrUser"></div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <span class="session-badge" id="sessionBadge">⏱ 30m</span>
+      <button class="btn-hdr btn-edit" id="editModeBtn">✏️ Edit Mode</button>
+      <button class="btn-hdr btn-logout" id="logoutBtn">⏏ Exit</button>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="notes">📝 Notes</button>
+    <button class="tab-btn" data-tab="links">🔗 Links</button>
+    <button class="tab-btn" data-tab="info">ℹ️ Info</button>
+    <button class="tab-btn" data-tab="finance">💰 Finance</button>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="toolbar">
+      <button class="btn-add" id="addRowBtn">＋ Add Row</button>
+      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search…" />
+      <span class="row-count" id="rowCount"></span>
+    </div>
+    <div class="table-wrap" id="tableWrap"></div>
+    <div class="finance-summary" id="financeSummary">
+      <div class="summary-card">
+        <span class="summary-label">Total Income</span>
+        <span class="summary-val val-income" id="sumIncome">৳ 0</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-label">Total Expense</span>
+        <span class="summary-val val-expense" id="sumExpense">৳ 0</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-label">Net Balance</span>
+        <span class="summary-val" id="sumNet">৳ 0</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Re-auth Modal -->
+<div class="modal-overlay" id="reauthModal">
+  <div class="modal-card">
+    <h3>🔐 Confirm Identity</h3>
+    <p>Enter your password to enable Edit Mode</p>
+    <div class="modal-field">
+      <label>Password</label>
+      <input type="password" id="reauthPwd" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="reauthCancel">Cancel</button>
+      <button class="btn-confirm" id="reauthConfirm">Confirm</button>
+    </div>
+    <div class="modal-error" id="reauthError"></div>
+  </div>
+</div>
+
+<!-- Add / Edit Modal -->
+<div class="modal-overlay" id="dataModal">
+  <div class="modal-card modal-lg">
+    <h3 id="modalTitle">Add Row</h3>
+    <div id="modalFields" class="modal-fields-grid"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modalCancel">Cancel</button>
+      <button class="btn-save" id="modalSave">Save</button>
+    </div>
+    <div class="modal-error" id="modalError"></div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-card">
+    <h3>🗑️ Delete Record</h3>
+    <p>Are you sure? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="deleteCancel">Cancel</button>
+      <button class="btn-danger" id="deleteConfirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp }                    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import {
+    getAuth, onAuthStateChanged, signOut,
+    EmailAuthProvider, reauthenticateWithCredential
+  }                                           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import {
+    getFirestore, collection, doc,
+    onSnapshot, addDoc, updateDoc, deleteDoc,
+    serverTimestamp
+  }                                           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  // ── FIREBASE ─────────────────────────────
+  const firebaseConfig = {
+    apiKey:            "AIzaSyDeqVNP-gI6UnB8NB4-Ms9aE1WrKM0tE2c",
+    authDomain:        "onik-private-data.firebaseapp.com",
+    projectId:         "onik-private-data",
+    storageBucket:     "onik-private-data.firebasestorage.app",
+    messagingSenderId: "285087533527",
+    appId:             "1:285087533527:web:fc89db71b49e05a8ef2392",
+    measurementId:     "G-26J8ZZ7WW3"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  // ── TAB / COLUMN DEFINITIONS ─────────────
+  const TABS = {
+    notes: {
+      label: 'Note', emoji: '📝',
+      cols: [
+        { key: 'title',     label: 'Title',     type: 'text',     required: true, span: 2 },
+        { key: 'content',   label: 'Content',   type: 'textarea', span: 2 },
+        { key: 'tags',      label: 'Tags',      type: 'text' },
+        { key: 'updatedAt', label: 'Updated',   type: 'ts',       readonly: true }
+      ]
+    },
+    links: {
+      label: 'Link', emoji: '🔗',
+      cols: [
+        { key: 'title',       label: 'Title',       type: 'text', required: true, span: 2 },
+        { key: 'url',         label: 'URL',         type: 'url',  required: true, span: 2 },
+        { key: 'description', label: 'Description', type: 'text' },
+        { key: 'category',    label: 'Category',    type: 'text' },
+        { key: 'createdAt',   label: 'Added',       type: 'ts',   readonly: true }
+      ]
+    },
+    info: {
+      label: 'Info', emoji: 'ℹ️',
+      cols: [
+        { key: 'key',       label: 'Label',    type: 'text',     required: true },
+        { key: 'value',     label: 'Value',    type: 'text',     required: true },
+        { key: 'category',  label: 'Category', type: 'text' },
+        { key: 'note',      label: 'Note',     type: 'textarea', span: 2 },
+        { key: 'createdAt', label: 'Added',    type: 'ts',       readonly: true }
+      ]
+    },
+    finance: {
+      label: 'Record', emoji: '💰',
+      cols: [
+        { key: 'date',        label: 'Date',        type: 'date',   required: true },
+        { key: 'type',        label: 'Type',        type: 'select', required: true, options: ['income','expense'] },
+        { key: 'category',    label: 'Category',    type: 'text' },
+        { key: 'amount',      label: 'Amount (৳)',  type: 'number', required: true },
+        { key: 'account',     label: 'Account',     type: 'text' },
+        { key: 'description', label: 'Description', type: 'text', span: 2 }
+      ]
+    }
+  };
+
+  // ── STATE ─────────────────────────────────
+  let currentTab   = 'notes';
+  let tabData      = { notes: [], links: [], info: [], finance: [] };
+  let sortState    = { col: null, dir: 'asc' };
+  let isEditMode   = false;
+  let currentUser  = null;
+  let editingId    = null;
+  let deletingId   = null;
+  let unsubs       = {};
+  let searchQ      = '';
+
+  // ── SESSION TIMEOUT (30 min) ──────────────
+  const SESSION_MS = 30 * 60 * 1000;
+  let lastActivity = Date.now();
+  let sessionTimer;
+  let warned5      = false;
+
+  function resetActivity() { lastActivity = Date.now(); warned5 = false; }
+  ['click','keydown','mousemove','scroll','touchstart'].forEach(ev =>
+    document.addEventListener(ev, resetActivity, { passive: true })
+  );
+
+  function startSession() {
+    sessionTimer = setInterval(() => {
+      const elapsed   = Date.now() - lastActivity;
+      const remaining = SESSION_MS - elapsed;
+
+      if (remaining <= 0) {
+        clearInterval(sessionTimer);
+        doLogout('timeout');
+        return;
+      }
+
+      const mins = Math.ceil(remaining / 60000);
+      document.getElementById('sessionBadge').textContent = `⏱ ${mins}m`;
+
+      if (remaining <= 5 * 60 * 1000 && !warned5) {
+        warned5 = true;
+        showToast(`⚠️ Session expires in ${mins} min`, 'warning');
+      }
+    }, 30_000);
+  }
+
+  // ── AUTH GATE ─────────────────────────────
+  onAuthStateChanged(auth, user => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    if (!user) { window.location.replace('login.html'); return; }
+    currentUser = user;
+    document.getElementById('hdrUser').textContent = user.email;
+    document.getElementById('app').style.display = 'block';
+    startSession();
+    subscribeAll();
+    setupUI();
+  });
+
+  // ── FIRESTORE SUBSCRIPTIONS ───────────────
+  function subscribeAll() {
+    Object.keys(TABS).forEach(subscribeTab);
+  }
+
+  function subscribeTab(tab) {
+    if (unsubs[tab]) unsubs[tab]();
+    const colRef = collection(db, 'users', currentUser.uid, tab);
+    unsubs[tab] = onSnapshot(colRef, snap => {
+      tabData[tab] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (currentTab === tab) renderTable();
+    }, err => {
+      console.error(err);
+      showToast('Data load error', 'error');
+    });
+  }
+
+  // ── TAB SWITCHING ─────────────────────────
+  function switchTab(tab) {
+    currentTab = tab;
+    sortState  = { col: null, dir: 'asc' };
+    searchQ    = '';
+    document.getElementById('searchInput').value = '';
+    document.querySelectorAll('.tab-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.tab === tab)
+    );
+    document.getElementById('financeSummary').style.display =
+      tab === 'finance' ? 'flex' : 'none';
+    renderTable();
+  }
+
+  // ── RENDER TABLE ──────────────────────────
+  function getDisplayData() {
+    let data = [...tabData[currentTab]];
+
+    if (searchQ) {
+      const q = searchQ.toLowerCase();
+      data = data.filter(row =>
+        Object.values(row).some(v => String(v ?? '').toLowerCase().includes(q))
+      );
+    }
+
+    if (sortState.col) {
+      data.sort((a, b) => {
+        let av = a[sortState.col], bv = b[sortState.col];
+        if (av?.toMillis) av = av.toMillis();
+        if (bv?.toMillis) bv = bv.toMillis();
+        av = av ?? '';  bv = bv ?? '';
+        const cmp = typeof av === 'number' && typeof bv === 'number'
+          ? av - bv
+          : String(av).localeCompare(String(bv), undefined, { numeric: true });
+        return sortState.dir === 'asc' ? cmp : -cmp;
+      });
+    } else {
+      // Default: newest first
+      data.sort((a, b) => {
+        const at = a.createdAt?.toMillis?.() ?? 0;
+        const bt = b.createdAt?.toMillis?.() ?? 0;
+        return bt - at;
+      });
+    }
+    return data;
+  }
+
+  function renderTable() {
+    const cols = TABS[currentTab].cols;
+    const data = getDisplayData();
+    const wrap = document.getElementById('tableWrap');
+
+    document.getElementById('rowCount').textContent =
+      `${data.length} record${data.length !== 1 ? 's' : ''}`;
+    const addBtn = document.getElementById('addRowBtn');
+    addBtn.style.display = isEditMode ? 'inline-flex' : 'none';
+
+    if (data.length === 0) {
+      wrap.innerHTML = `<div class="empty-state">
+        ${isEditMode ? '＋ Click "Add Row" to create your first entry' : 'No records yet'}
+      </div>`;
+      if (currentTab === 'finance') updateFinSummary([]);
+      return;
+    }
+
+    const tbl   = document.createElement('table');
+    tbl.className = 'data-table';
+
+    // Head
+    const thead = tbl.createTHead();
+    const hRow  = thead.insertRow();
+    hRow.innerHTML = '<th class="col-num no-sort">#</th>';
+
+    cols.forEach(col => {
+      const th = document.createElement('th');
+      const sorted = sortState.col === col.key;
+      const arrow  = sorted ? (sortState.dir === 'asc' ? ' ↑' : ' ↓') : '';
+      th.innerHTML = col.label + `<span>${arrow}</span>`;
+      if (sorted) th.classList.add('sorted');
+      if (col.readonly) { th.classList.add('no-sort'); }
+      else { th.addEventListener('click', () => handleSort(col.key)); }
+      hRow.appendChild(th);
+    });
+
+    if (isEditMode) {
+      const th = document.createElement('th');
+      th.textContent = 'Actions'; th.className = 'col-actions no-sort';
+      hRow.appendChild(th);
+    }
+
+    // Body
+    const tbody = tbl.createTBody();
+    data.forEach((row, i) => {
+      const tr = tbody.insertRow();
+      tr.innerHTML = `<td class="col-num">${i + 1}</td>`;
+
+      cols.forEach(col => {
+        const td  = tr.insertCell();
+        let   val = row[col.key];
+
+        if (col.type === 'ts' && val?.toDate) {
+          td.textContent = fmtDate(val.toDate());
+          td.style.color = 'var(--muted)'; td.style.fontSize = '0.75rem';
+        } else if (col.type === 'url' && val) {
+          td.innerHTML = `<a href="${esc(val)}" target="_blank" rel="noopener" class="link-cell">${esc(val)}</a>`;
+        } else if (col.key === 'type') {
+          td.innerHTML = `<span class="badge badge-${val}">${val ?? ''}</span>`;
+        } else if (col.key === 'amount' && val != null) {
+          td.textContent = '৳ ' + Number(val).toLocaleString('en-BD', { minimumFractionDigits: 2 });
+          td.style.fontWeight = '600';
+          td.style.color = row.type === 'income' ? 'var(--income)' : 'var(--expense)';
+        } else if (col.type === 'textarea') {
+          td.className = 'td-truncate';
+          td.textContent = val ?? '';
+          td.title = val ?? '';
+        } else {
+          td.textContent = val ?? '';
+        }
+      });
+
+      if (isEditMode) {
+        const td = tr.insertCell();
+        td.className = 'col-actions';
+        td.innerHTML = `
+          <button class="btn-row btn-row-edit"   title="Edit">✏️</button>
+          <button class="btn-row btn-row-delete" title="Delete">🗑️</button>
+        `;
+        td.querySelector('.btn-row-edit').onclick   = () => openEditModal(row.id);
+        td.querySelector('.btn-row-delete').onclick = () => openDeleteModal(row.id);
+      }
+    });
+
+    wrap.innerHTML = '';
+    wrap.appendChild(tbl);
+    if (currentTab === 'finance') updateFinSummary(data);
+  }
+
+  function handleSort(col) {
+    sortState = sortState.col === col
+      ? { col, dir: sortState.dir === 'asc' ? 'desc' : 'asc' }
+      : { col, dir: 'asc' };
+    renderTable();
+  }
+
+  function updateFinSummary(data) {
+    const income  = data.filter(r => r.type === 'income') .reduce((s, r) => s + (Number(r.amount) || 0), 0);
+    const expense = data.filter(r => r.type === 'expense').reduce((s, r) => s + (Number(r.amount) || 0), 0);
+    const net     = income - expense;
+    const fmt     = n => '৳ ' + Math.abs(n).toLocaleString('en-BD', { minimumFractionDigits: 2 });
+    document.getElementById('sumIncome').textContent  = fmt(income);
+    document.getElementById('sumExpense').textContent = fmt(expense);
+    const netEl = document.getElementById('sumNet');
+    netEl.textContent = (net < 0 ? '−' : '') + fmt(net);
+    netEl.className = 'summary-val ' + (net >= 0 ? 'val-pos' : 'val-neg');
+  }
+
+  // ── EDIT MODE ─────────────────────────────
+  function toggleEditMode() {
+    if (isEditMode) { exitEdit(); } else { showModal('reauthModal'); document.getElementById('reauthPwd').focus(); }
+  }
+
+  async function confirmReauth() {
+    const pwd = document.getElementById('reauthPwd').value;
+    const errEl = document.getElementById('reauthError');
+    const btn   = document.getElementById('reauthConfirm');
+    if (!pwd) { errEl.textContent = 'Enter your password.'; return; }
+    errEl.textContent = '';
+    btn.disabled = true; btn.textContent = 'Verifying…';
+    try {
+      const cred = EmailAuthProvider.credential(currentUser.email, pwd);
+      await reauthenticateWithCredential(currentUser, cred);
+      hideModal('reauthModal');
+      isEditMode = true;
+      document.getElementById('editModeBtn').textContent = '👁 View Mode';
+      document.getElementById('editModeBtn').classList.add('active');
+      renderTable();
+      showToast('Edit Mode enabled', 'success');
+    } catch {
+      errEl.textContent = 'Incorrect password.';
+    } finally {
+      btn.disabled = false; btn.textContent = 'Confirm';
+    }
+  }
+
+  function exitEdit() {
+    isEditMode = false;
+    document.getElementById('editModeBtn').textContent = '✏️ Edit Mode';
+    document.getElementById('editModeBtn').classList.remove('active');
+    renderTable();
+    showToast('View Mode', 'info');
+  }
+
+  // ── ADD / EDIT MODAL ─────────────────────
+  function openAddModal() {
+    editingId = null;
+    document.getElementById('modalTitle').textContent = `Add ${TABS[currentTab].emoji} ${TABS[currentTab].label}`;
+    document.getElementById('modalError').textContent = '';
+    buildModalFields(null);
+    showModal('dataModal');
+  }
+
+  function openEditModal(id) {
+    const row = tabData[currentTab].find(r => r.id === id);
+    if (!row) return;
+    editingId = id;
+    document.getElementById('modalTitle').textContent = `Edit ${TABS[currentTab].emoji} ${TABS[currentTab].label}`;
+    document.getElementById('modalError').textContent = '';
+    buildModalFields(row);
+    showModal('dataModal');
+  }
+
+  function buildModalFields(row) {
+    const writableCols = TABS[currentTab].cols.filter(c => !c.readonly);
+    const container    = document.getElementById('modalFields');
+
+    container.innerHTML = writableCols.map(col => {
+      const val = row ? (row[col.key] ?? '') : '';
+      const spanStyle = col.span === 2 ? 'grid-column: 1 / -1;' : '';
+      let input = '';
+
+      if (col.type === 'textarea') {
+        input = `<textarea id="mf_${col.key}" rows="3" placeholder="${col.label}">${esc(String(val))}</textarea>`;
+      } else if (col.type === 'select') {
+        const opts = col.options.map(o =>
+          `<option value="${o}"${val === o ? ' selected' : ''}>${o.charAt(0).toUpperCase() + o.slice(1)}</option>`
+        ).join('');
+        input = `<select id="mf_${col.key}">${opts}</select>`;
+      } else {
+        input = `<input type="${col.type}" id="mf_${col.key}" value="${esc(String(val))}"
+          placeholder="${col.label}" ${col.required ? 'required' : ''} step="${col.type==='number'?'0.01':''}"/>`;
+      }
+
+      return `<div class="modal-field" style="${spanStyle}">
+        <label>${col.label}${col.required ? ' <span style="color:var(--expense)">*</span>' : ''}</label>
+        ${input}
+      </div>`;
+    }).join('');
+  }
+
+  async function saveModal() {
+    const writableCols = TABS[currentTab].cols.filter(c => !c.readonly);
+    const data = {};
+    for (const col of writableCols) {
+      const el = document.getElementById(`mf_${col.key}`);
+      if (!el) continue;
+      let val = el.value.trim();
+      if (col.required && !val) {
+        document.getElementById('modalError').textContent = `${col.label} is required.`;
+        el.focus(); return;
+      }
+      if (col.type === 'number' && val) val = Number(val);
+      if (val !== '') data[col.key] = val;
+    }
+
+    const saveBtn = document.getElementById('modalSave');
+    saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+    try {
+      if (editingId) {
+        await updateDoc(
+          doc(db, 'users', currentUser.uid, currentTab, editingId),
+          { ...data, updatedAt: serverTimestamp() }
+        );
+      } else {
+        await addDoc(
+          collection(db, 'users', currentUser.uid, currentTab),
+          { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }
+        );
+      }
+      hideModal('dataModal');
+      showToast(editingId ? '✓ Updated' : '✓ Added', 'success');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('modalError').textContent = 'Save failed. Try again.';
+    } finally {
+      saveBtn.disabled = false; saveBtn.textContent = 'Save';
+    }
+  }
+
+  // ── DELETE ────────────────────────────────
+  function openDeleteModal(id) {
+    deletingId = id;
+    showModal('deleteModal');
+  }
+
+  async function confirmDelete() {
+    if (!deletingId) return;
+    const btn = document.getElementById('deleteConfirm');
+    btn.disabled = true;
+    try {
+      await deleteDoc(doc(db, 'users', currentUser.uid, currentTab, deletingId));
+      hideModal('deleteModal');
+      showToast('✓ Deleted', 'success');
+    } catch (err) {
+      console.error(err);
+      showToast('Delete failed', 'error');
+    } finally {
+      btn.disabled = false; deletingId = null;
+    }
+  }
+
+  // ── LOGOUT ────────────────────────────────
+  async function doLogout(reason = '') {
+    clearInterval(sessionTimer);
+    Object.values(unsubs).forEach(fn => fn?.());
+    if (reason) sessionStorage.setItem('logout-reason', reason);
+    await signOut(auth);
+    window.location.replace('login.html');
+  }
+
+  // ── MODAL HELPERS ─────────────────────────
+  function showModal(id) { document.getElementById(id).classList.add('open'); }
+  function hideModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  // ── TOAST ─────────────────────────────────
+  let toastTimer;
+  function showToast(msg, type = 'info') {
+    clearTimeout(toastTimer);
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast toast-${type} show`;
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  // ── HELPERS ───────────────────────────────
+  function fmtDate(d) {
+    if (!d) return '';
+    return d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' })
+      + ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function esc(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+              .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ── SETUP EVENT LISTENERS ─────────────────
+  function setupUI() {
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn =>
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab))
+    );
+
+    // Edit Mode
+    document.getElementById('editModeBtn').addEventListener('click', toggleEditMode);
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => doLogout());
+
+    // Add row
+    document.getElementById('addRowBtn').addEventListener('click', openAddModal);
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchQ = e.target.value;
+      renderTable();
+    });
+
+    // Re-auth modal
+    document.getElementById('reauthConfirm').addEventListener('click', confirmReauth);
+    document.getElementById('reauthCancel').addEventListener('click', () => hideModal('reauthModal'));
+    document.getElementById('reauthPwd').addEventListener('keydown', e => {
+      if (e.key === 'Enter') confirmReauth();
+    });
+    document.getElementById('reauthModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) hideModal('reauthModal');
+    });
+
+    // Data modal
+    document.getElementById('modalSave').addEventListener('click', saveModal);
+    document.getElementById('modalCancel').addEventListener('click', () => hideModal('dataModal'));
+    document.getElementById('dataModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) hideModal('dataModal');
+    });
+
+    // Delete modal
+    document.getElementById('deleteConfirm').addEventListener('click', confirmDelete);
+    document.getElementById('deleteCancel').addEventListener('click', () => {
+      hideModal('deleteModal'); deletingId = null;
+    });
+    document.getElementById('deleteModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) { hideModal('deleteModal'); deletingId = null; }
+    });
+
+    switchTab('notes');
+  }
+</script>
+</body>
+</html>

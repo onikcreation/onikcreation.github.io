@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Login — Onik</title>
+  <link rel="icon" type="image/png" href="assets/OnikLogo.png" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f1a3e 0%, #1a0f50 25%, #0a2040 55%, #1a0a3a 80%, #0f1830 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .logo img { width: 64px; height: auto; }
+
+    .lock { text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
+
+    h1 {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 28px;
+    }
+
+    .notice {
+      padding: 10px 14px;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.3);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: #93c5fd;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .form-group { margin-bottom: 15px; }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    input:focus {
+      border-color: #38bdf8;
+      background: rgba(255,255,255,0.12);
+    }
+
+    input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #38bdf8, #a78bfa);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .error {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 8px;
+      color: #fca5a5;
+      font-size: 0.82rem;
+      display: none;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: rgba(255,255,255,0.7); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="logo"><img src="assets/OnikLogo.png" alt="Onik" /></div>
+      <div class="lock">🔒</div>
+      <h1>Private Access</h1>
+      <p class="subtitle">Authenticated access only</p>
+
+      <div class="notice" id="notice"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn" id="loginBtn">Login</button>
+        <div class="error" id="errorMsg"></div>
+      </form>
+    </div>
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+  </div>
+
+  <script type="module">
+    import { initializeApp }              from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged }
+                                          from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyDeqVNP-gI6UnB8NB4-Ms9aE1WrKM0tE2c",
+      authDomain:        "onik-private-data.firebaseapp.com",
+      projectId:         "onik-private-data",
+      storageBucket:     "onik-private-data.firebasestorage.app",
+      messagingSenderId: "285087533527",
+      appId:             "1:285087533527:web:fc89db71b49e05a8ef2392",
+      measurementId:     "G-26J8ZZ7WW3"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Show logout reason if redirected here
+    const reason = sessionStorage.getItem('logout-reason');
+    if (reason) {
+      sessionStorage.removeItem('logout-reason');
+      const el = document.getElementById('notice');
+      el.textContent = reason === 'timeout'
+        ? '⏱ Session expired due to inactivity. Please login again.'
+        : '✓ You have been logged out.';
+      el.style.display = 'block';
+    }
+
+    // Already logged in → redirect
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.replace('data.html');
+    });
+
+    const form     = document.getElementById('loginForm');
+    const emailEl  = document.getElementById('email');
+    const passEl   = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorEl  = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      errorEl.style.display = 'none';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in…';
+
+      try {
+        await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+        // onAuthStateChanged handles redirect
+      } catch (err) {
+        const msgs = {
+          'auth/invalid-credential':  'Invalid email or password.',
+          'auth/wrong-password':      'Invalid email or password.',
+          'auth/user-not-found':      'No account found with this email.',
+          'auth/too-many-requests':   'Too many attempts. Try again later.',
+          'auth/network-request-failed': 'Network error. Check your connection.'
+        };
+        errorEl.textContent = msgs[err.code] || 'Login failed. Please try again.';
+        errorEl.style.display = 'block';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Login';
+      }
+    });
+  </script>
+</body>
+</html>
