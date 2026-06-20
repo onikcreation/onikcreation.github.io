@@ -395,22 +395,6 @@
   </main>
 </div>
 
-<!-- Re-auth Modal -->
-<div class="modal-overlay" id="reauthModal">
-  <div class="modal-card">
-    <h3>🔐 Confirm Identity</h3>
-    <p>Enter your password to enable Edit Mode</p>
-    <div class="modal-field">
-      <label>Password</label>
-      <input type="password" id="reauthPwd" placeholder="••••••••" autocomplete="current-password" />
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" id="reauthCancel">Cancel</button>
-      <button class="btn-confirm" id="reauthConfirm">Confirm</button>
-    </div>
-    <div class="modal-error" id="reauthError"></div>
-  </div>
-</div>
 
 <!-- Add / Edit Modal -->
 <div class="modal-overlay" id="dataModal">
@@ -443,9 +427,7 @@
 <script type="module">
   import { initializeApp }                    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
   import {
-    getAuth, onAuthStateChanged, signOut,
-    browserSessionPersistence, setPersistence,
-    EmailAuthProvider, reauthenticateWithCredential
+    getAuth, onAuthStateChanged, signOut
   }                                           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   import {
     getFirestore, collection, doc,
@@ -739,33 +721,14 @@
 
   // ── EDIT MODE ─────────────────────────────
   function toggleEditMode() {
-    if (isEditMode) { exitEdit(); } else { showModal('reauthModal'); document.getElementById('reauthPwd').focus(); }
-  }
-
-  async function confirmReauth() {
-    const pwd = document.getElementById('reauthPwd').value;
-    const errEl = document.getElementById('reauthError');
-    const btn   = document.getElementById('reauthConfirm');
-    if (!pwd) { errEl.textContent = 'Enter your password.'; return; }
-    errEl.textContent = '';
-    btn.disabled = true; btn.textContent = 'Verifying…';
-    try {
-      await setPersistence(auth, browserSessionPersistence);
-      const cred = EmailAuthProvider.credential(currentUser.email, pwd);
-      await reauthenticateWithCredential(currentUser, cred);
-      hideModal('reauthModal');
-      isEditMode = true;
-      sessionStorage.setItem('editMode', '1');
-      document.getElementById('editModeBtn').textContent = '👁 View Mode';
-      document.getElementById('editModeBtn').classList.add('active');
-      document.getElementById('migrateBtn').classList.add('visible');
-      renderTable();
-      showToast('Edit Mode enabled', 'success');
-    } catch {
-      errEl.textContent = 'Incorrect password.';
-    } finally {
-      btn.disabled = false; btn.textContent = 'Confirm';
-    }
+    if (isEditMode) { exitEdit(); return; }
+    isEditMode = true;
+    sessionStorage.setItem('editMode', '1');
+    document.getElementById('editModeBtn').textContent = '👁 View Mode';
+    document.getElementById('editModeBtn').classList.add('active');
+    document.getElementById('migrateBtn').classList.add('visible');
+    renderTable();
+    showToast('Edit Mode enabled', 'success');
   }
 
   function exitEdit() {
@@ -1012,16 +975,6 @@
     // Add row
     document.getElementById('addRowBtn').addEventListener('click', openAddModal);
 
-
-    // Re-auth modal
-    document.getElementById('reauthConfirm').addEventListener('click', confirmReauth);
-    document.getElementById('reauthCancel').addEventListener('click', () => hideModal('reauthModal'));
-    document.getElementById('reauthPwd').addEventListener('keydown', e => {
-      if (e.key === 'Enter') confirmReauth();
-    });
-    document.getElementById('reauthModal').addEventListener('click', e => {
-      if (e.target === e.currentTarget) hideModal('reauthModal');
-    });
 
     // Data modal
     document.getElementById('modalSave').addEventListener('click', saveModal);
