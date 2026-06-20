@@ -348,7 +348,7 @@
     </div>
     <div class="hdr-right">
       <button class="btn-hdr btn-edit" id="editModeBtn">✏️ Edit Mode</button>
-      <button class="btn-hdr btn-logout" id="logoutBtn">⏏ Exit</button>
+      <button class="btn-hdr btn-logout" id="logoutBtn">⏏ Log Out</button>
     </div>
   </header>
 
@@ -661,19 +661,19 @@
           td.style.fontWeight = '600';
           td.style.color = row.type === 'income' ? 'var(--income)' : 'var(--expense)';
         } else if (col.type === 'textarea') {
-          td.style.maxWidth = '260px';
           const fullVal = val ?? '';
-          const span = document.createElement('span');
-          span.className = 'td-truncate'; span.title = fullVal; span.textContent = fullVal;
           const copyBtn = document.createElement('button');
           copyBtn.className = 'btn-copy'; copyBtn.textContent = '📋';
           copyBtn.title = 'Copy';
           copyBtn.onclick = () => {
             navigator.clipboard.writeText(fullVal).then(() => showToast('Copied!', 'success'));
           };
+          const span = document.createElement('span');
+          span.style.cssText = 'white-space:pre-wrap;word-break:break-word;';
+          span.textContent = fullVal;
           const wrap2 = document.createElement('div');
-          wrap2.style.cssText = 'display:flex;align-items:center;gap:6px;';
-          wrap2.appendChild(span); wrap2.appendChild(copyBtn);
+          wrap2.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
+          wrap2.appendChild(copyBtn); wrap2.appendChild(span);
           td.appendChild(wrap2);
         } else {
           td.textContent = val ?? '';
