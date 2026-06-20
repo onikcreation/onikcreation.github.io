@@ -361,9 +361,7 @@
 
   <!-- Tabs -->
   <nav class="tabs">
-    <button type="button" class="tab-btn active" data-tab="notes">📝 Notes</button>
-    <button type="button" class="tab-btn" data-tab="links">🔗 Links</button>
-    <button type="button" class="tab-btn" data-tab="info">ℹ️ Info</button>
+    <button type="button" class="tab-btn active" data-tab="records">📋 Records</button>
     <button type="button" class="tab-btn" data-tab="finance">💰 Finance</button>
   </nav>
 
@@ -466,33 +464,15 @@
 
   // ── TAB / COLUMN DEFINITIONS ─────────────
   const TABS = {
-    notes: {
-      label: 'Note', emoji: '📝',
+    records: {
+      label: 'Record', emoji: '📋',
       cols: [
-        { key: 'title',     label: 'Title',     type: 'text',     required: true, span: 2 },
-        { key: 'content',   label: 'Content',   type: 'textarea', span: 2 },
-        { key: 'tags',      label: 'Tags',      type: 'text' },
-        { key: 'updatedAt', label: 'Updated',   type: 'ts',       readonly: true }
-      ]
-    },
-    links: {
-      label: 'Link', emoji: '🔗',
-      cols: [
-        { key: 'title',       label: 'Title',       type: 'text', required: true, span: 2 },
-        { key: 'url',         label: 'URL',         type: 'url',  required: true, span: 2 },
-        { key: 'description', label: 'Description', type: 'text' },
+        { key: 'title',       label: 'Title',       type: 'text',     required: true, span: 2 },
+        { key: 'note',        label: 'Note',        type: 'textarea', span: 2 },
+        { key: 'url',         label: 'URL',         type: 'url',      span: 2 },
+        { key: 'description', label: 'Description', type: 'text',     span: 2 },
         { key: 'category',    label: 'Category',    type: 'text' },
-        { key: 'createdAt',   label: 'Added',       type: 'ts',   readonly: true }
-      ]
-    },
-    info: {
-      label: 'Info', emoji: 'ℹ️',
-      cols: [
-        { key: 'key',       label: 'Label',    type: 'text',     required: true },
-        { key: 'value',     label: 'Value',    type: 'text',     required: true },
-        { key: 'category',  label: 'Category', type: 'text' },
-        { key: 'note',      label: 'Note',     type: 'textarea', span: 2 },
-        { key: 'createdAt', label: 'Added',    type: 'ts',       readonly: true }
+        { key: 'updatedAt',   label: 'Updated',     type: 'ts',       readonly: true }
       ]
     },
     finance: {
@@ -503,15 +483,15 @@
         { key: 'category',    label: 'Category',    type: 'text' },
         { key: 'amount',      label: 'Amount (৳)',  type: 'number', required: true },
         { key: 'account',     label: 'Account',     type: 'text' },
-        { key: 'description', label: 'Description', type: 'text', span: 2 }
+        { key: 'description', label: 'Description', type: 'text',   span: 2 }
       ]
     }
   };
 
   // ── STATE ─────────────────────────────────
-  let currentTab   = 'notes';
-  let tabData      = { notes: [], links: [], info: [], finance: [] };
-  let tabLoading   = { notes: true, links: true, info: true, finance: true };
+  let currentTab   = 'records';
+  let tabData      = { records: [], finance: [] };
+  let tabLoading   = { records: true, finance: true };
   let sortState    = { col: null, dir: 'asc' };
   let isEditMode   = false;
   let activeTag    = null;
@@ -569,9 +549,6 @@
   function getAllTags() {
     const tagSet = new Set();
     tabData[currentTab].forEach(row => {
-      if (row.tags) {
-        row.tags.split(',').forEach(t => { const tr = t.trim(); if (tr) tagSet.add(tr); });
-      }
       if (row.category) tagSet.add(row.category.trim());
     });
     return [...tagSet].sort();
@@ -597,11 +574,7 @@
     let data = [...tabData[currentTab]];
 
     if (activeTag) {
-      data = data.filter(row => {
-        const inTags = row.tags && row.tags.split(',').map(t => t.trim()).includes(activeTag);
-        const inCat  = row.category && row.category.trim() === activeTag;
-        return inTags || inCat;
-      });
+      data = data.filter(row => row.category && row.category.trim() === activeTag);
     }
 
     if (sortState.col) {
