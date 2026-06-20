@@ -219,6 +219,21 @@
     .btn-row-edit:hover   { background: rgba(56,189,248,0.15); }
     .btn-row-delete:hover { background: rgba(239,68,68,0.15); }
 
+    .btn-copy {
+      padding: 2px 6px; border: 1px solid var(--border);
+      border-radius: 4px; background: var(--glass);
+      color: var(--muted); cursor: pointer; font-size: 0.72rem;
+      flex-shrink: 0; transition: all 0.15s;
+    }
+    .btn-copy:hover { color: var(--accent); border-color: var(--accent); }
+
+    .tbl-spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(56,189,248,0.2); border-top-color: #38bdf8;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+
     .empty-state {
       text-align: center; padding: 50px 20px;
       color: var(--muted); font-size: 0.9rem;
@@ -496,6 +511,7 @@
   // ── STATE ─────────────────────────────────
   let currentTab   = 'notes';
   let tabData      = { notes: [], links: [], info: [], finance: [] };
+  let tabLoading   = { notes: true, links: true, info: true, finance: true };
   let sortState    = { col: null, dir: 'asc' };
   let isEditMode   = false;
   let currentUser  = null;
@@ -557,11 +573,14 @@
 
   function subscribeTab(tab) {
     if (unsubs[tab]) unsubs[tab]();
+    tabLoading[tab] = true;
     const colRef = collection(db, 'users', currentUser.uid, tab);
     unsubs[tab] = onSnapshot(colRef, snap => {
       tabData[tab] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      tabLoading[tab] = false;
       if (currentTab === tab) renderTable();
     }, err => {
+      tabLoading[tab] = false;
       console.error(err);
       showToast('Data load error', 'error');
     });
@@ -624,6 +643,11 @@
     const addBtn = document.getElementById('addRowBtn');
     addBtn.style.display = isEditMode ? 'inline-flex' : 'none';
 
+    if (tabLoading[currentTab]) {
+      wrap.innerHTML = `<div class="empty-state"><span class="tbl-spinner"></span> Loading…</div>`;
+      return;
+    }
+
     if (data.length === 0) {
       wrap.innerHTML = `<div class="empty-state">
         ${isEditMode ? '＋ Click "Add Row" to create your first entry' : 'No records yet'}
@@ -679,9 +703,20 @@
           td.style.fontWeight = '600';
           td.style.color = row.type === 'income' ? 'var(--income)' : 'var(--expense)';
         } else if (col.type === 'textarea') {
-          td.className = 'td-truncate';
-          td.textContent = val ?? '';
-          td.title = val ?? '';
+          td.style.maxWidth = '260px';
+          const fullVal = val ?? '';
+          const span = document.createElement('span');
+          span.className = 'td-truncate'; span.title = fullVal; span.textContent = fullVal;
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'btn-copy'; copyBtn.textContent = '📋';
+          copyBtn.title = 'Copy';
+          copyBtn.onclick = () => {
+            navigator.clipboard.writeText(fullVal).then(() => showToast('Copied!', 'success'));
+          };
+          const wrap2 = document.createElement('div');
+          wrap2.style.cssText = 'display:flex;align-items:center;gap:6px;';
+          wrap2.appendChild(span); wrap2.appendChild(copyBtn);
+          td.appendChild(wrap2);
         } else {
           td.textContent = val ?? '';
         }
