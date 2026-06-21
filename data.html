@@ -345,12 +345,69 @@
     .toast-info    { background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.5); color: #7dd3fc; }
 
     @media (max-width: 600px) {
-      #appHeader { padding: 0 12px; }
+      #appHeader { padding: 0 12px; height: auto; min-height: 54px; flex-wrap: wrap; gap: 6px; padding-top: 8px; padding-bottom: 8px; }
       .hdr-user, .session-badge { display: none; }
+      .hdr-title { font-size: 0.82rem; }
+      .btn-hdr { padding: 5px 10px; font-size: 0.72rem; }
+      .mode-badge { font-size: 0.68rem; padding: 3px 8px; }
       .tabs { padding: 10px 12px 0; }
       .tab-btn { padding: 7px 12px; font-size: 0.76rem; }
       .main { padding: 12px 10px 40px; }
       .modal-fields-grid { grid-template-columns: 1fr; }
+
+      /* ── Card layout for mobile ── */
+      .table-wrap { border: none; background: transparent; overflow-x: visible; }
+      .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+      .data-table thead { display: none; }
+
+      .data-table tbody tr {
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        padding: 10px 14px;
+      }
+      .data-table tbody tr:hover td { background: transparent; }
+
+      .data-table td {
+        padding: 5px 0;
+        max-width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        min-height: 28px;
+      }
+      .data-table td:last-child { border-bottom: none; }
+      .data-table td:empty { display: none; }
+
+      .data-table td[data-label]::before {
+        content: attr(data-label);
+        font-size: 0.66rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        min-width: 78px;
+        flex-shrink: 0;
+        padding-top: 2px;
+        line-height: 1.5;
+      }
+
+      .col-num { display: none !important; }
+
+      .col-actions {
+        width: 100%;
+        text-align: left;
+        justify-content: flex-start;
+        padding-top: 8px;
+        margin-top: 2px;
+        border-top: 1px solid var(--border) !important;
+      }
+      .col-actions::before { display: none !important; }
+
+      .link-cell { max-width: 100%; white-space: normal; word-break: break-all; }
+      .td-truncate { white-space: normal; overflow: visible; text-overflow: unset; max-width: 100%; }
     }
   </style>
 </head>
@@ -666,6 +723,7 @@
 
       cols.forEach(col => {
         const td  = tr.insertCell();
+        td.dataset.label = col.label;
         let   val = row[col.key];
 
         if (col.type === 'ts' && val?.toDate) {
