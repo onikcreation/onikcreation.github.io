@@ -1196,10 +1196,22 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 480px) {
-  .hero-name { font-size: 2.2rem; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
-  .hero-actions .btn { justify-content: center; }
-  .about-stats { flex-wrap: wrap; gap: 20px; }
+  /* Hero — fit entire section in one screen */
+  .hero-section      { padding: 68px 0 28px; min-height: 100svh; }
+  .hero-photo-wrap   { margin-bottom: 10px; }
+  .hero-photo        { width: 86px; height: 86px; }
+  .hero-badge        { font-size: 0.72rem; padding: 4px 12px; margin-bottom: 12px; }
+  .hero-name         { font-size: 2rem; margin-bottom: 8px; }
+  .hero-title-wrap   { margin-bottom: 10px; }
+  .hero-title        { font-size: 0.8rem; padding: 5px 16px; }
+  .hero-bio          { font-size: 0.83rem; line-height: 1.6; margin-bottom: 12px; }
+  .hero-quote        { font-size: 0.76rem; line-height: 1.65; padding: 9px 12px 9px 14px; margin-bottom: 12px; }
+  .hero-actions      { gap: 8px; margin-bottom: 14px; flex-direction: row; }
+  .hero-actions .btn { justify-content: center; flex: 1; padding: 9px 10px; font-size: 0.8rem; }
+  .hero-socials a    { width: 36px; height: 36px; font-size: 0.88rem; }
+  .scroll-down       { display: none; }
+
+  .about-stats       { flex-wrap: wrap; gap: 20px; }
   .download-vcf-btn span { display: none; }
 }
 
