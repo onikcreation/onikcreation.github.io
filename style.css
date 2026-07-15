@@ -558,9 +558,6 @@ a { text-decoration: none; color: inherit; }
   transition: none;
 }
 
-.about-image-wrap:hover img {
-  transform: scaleX(-1);
-}
 
 .about-image-frame {
   position: absolute;
