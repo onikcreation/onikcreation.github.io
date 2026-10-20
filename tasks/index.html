@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UUU Task Tracker</title>
+<meta name="description" content="উদ্ভাস-উন্মেষ ERP টিমের টাস্ক ট্র্যাকার">
+<!-- সার্চ ইঞ্জিনে দেখাবে না -->
+<meta name="robots" content="noindex, nofollow">
+<!-- WhatsApp / Messenger / Teams-এ শেয়ারের প্রিভিউ -->
+<meta property="og:title" content="UUU Task Tracker">
+<meta property="og:description" content="উদ্ভাস-উন্মেষ ERP টিমের টাস্ক ট্র্যাকার — টাস্ক দেখা, যোগ ও আপডেট">
+<meta property="og:url" content="https://onikcreation.com/tasks/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#4338CA">
+<script>
+  // আসল সাইটের ঠিকানা — গুগলের লিংক কখনো বদলালে শুধু এই লাইনটা বদলাতে হবে
+  var TARGET = 'https://script.google.com/macros/s/AKfycbwpY7LVLBTuYSWyJS74QjZgZ_RcQJ0BqXhue2qWfEPA6wGONVSIFgq_PEzzpduv9WPC/exec';
+  // replace = এই পেইজ "back"-এর তালিকায় থাকে না
+  // (শুধু JavaScript দিয়ে; meta refresh দিলে শেয়ারের প্রিভিউ-রোবট গুগলের পেইজে চলে যায়)
+  location.replace(TARGET);
+</script>
+<style>
+  :root { --bg: #F4F5FA; --card: #FFFFFF; --ink: #141625; --ink-2: #5A6075; --brand: #4338CA; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0F1016; --card: #181A23; --ink: #ECEEF5; --ink-2: #A3A9BB; --brand: #6D66F0; color-scheme: dark; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: var(--bg); color: var(--ink);
+    font-family: "Segoe UI", "Noto Sans Bengali", system-ui, sans-serif; }
+  .card { width: 100%; max-width: 380px; background: var(--card); border-radius: 18px; padding: 28px 24px; text-align: center;
+    box-shadow: 0 1px 2px rgba(20, 22, 37, .05), 0 8px 28px rgba(20, 22, 37, .08); }
+  .mark { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 15px; background: var(--brand); display: grid; place-items: center; }
+  h1 { margin: 0 0 6px; font-size: 20px; }
+  p { margin: 0 0 20px; color: var(--ink-2); font-size: 14.5px; line-height: 1.55; }
+  a.btn { display: inline-block; background: var(--brand); color: #fff; text-decoration: none; font-weight: 700; padding: 11px 22px; border-radius: 11px; }
+  a.btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+    <h1>UUU Task Tracker</h1>
+    <p>সাইট খোলা হচ্ছে…<br>নিজে থেকে না খুললে নিচের বাটনে চাপুন।</p>
+    <a class="btn" id="go" href="https://script.google.com/macros/s/AKfycbwpY7LVLBTuYSWyJS74QjZgZ_RcQJ0BqXhue2qWfEPA6wGONVSIFgq_PEzzpduv9WPC/exec">সাইট খুলুন / Open</a>
+  </main>
+</body>
+</html>

@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-10-20
+
+### UUU Task Tracker — ছোট লিংক (`/tasks`)
+- `tasks/index.html` যোগ করা হয়েছে → `onikcreation.com/tasks` খুললে UUU Task Tracker (Google Apps Script web app)-এ নিয়ে যায়
+- JavaScript দিয়ে redirect (meta refresh না, যাতে WhatsApp/Messenger প্রিভিউ ঠিক থাকে), শেয়ারের og: প্রিভিউ, `noindex`, ফলব্যাক "সাইট খুলুন" বাটন
+- গুগলের লিংক বদলালে শুধু `tasks/index.html`-এর `TARGET` আর বাটনের `href` আপডেট করতে হবে
+
+---
+
 ## 2026-07-15
 
 ### About Me — Image Flip Effect সরানো
@@ -114,6 +123,7 @@
 | `assets/profile.png` | Illustrated avatar (Adobe Firefly) |
 | `assets/OnikLogo.png` | Site logo |
 | `assets/HeaderLogo.png` | Navbar logo |
+| `tasks/index.html` | UUU Task Tracker-এর ছোট লিংক (redirect) |
 
 ---
 
