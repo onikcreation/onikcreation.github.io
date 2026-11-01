@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-11-01
+
+### UUU Task Tracker — Supabase সংস্করণের পরীক্ষামূলক সাইট (`/tasks-beta`)
+- `tasks-beta/index.html` যোগ → `onikcreation.com/tasks-beta`: Google Sheet-এর বদলে Supabase ডেটাবেস, UI হুবহু একই
+- উৎস: `ERP UI Design/5. MixData/ERPTechnicalProblemSupabaseClaude` (`_build/build_supabase.js` → `site/index.html`)
+- পরীক্ষা শেষে `/tasks`-এর redirect-এর বদলে এই সাইট বসবে
+
+---
+
 ## 2026-10-20
 
 ### UUU Task Tracker — ছোট লিংক (`/tasks`)
@@ -124,6 +133,7 @@
 | `assets/OnikLogo.png` | Site logo |
 | `assets/HeaderLogo.png` | Navbar logo |
 | `tasks/index.html` | UUU Task Tracker-এর ছোট লিংক (redirect) |
+| `tasks-beta/index.html` | UUU Task Tracker — Supabase সংস্করণ (পরীক্ষামূলক) |
 
 ---
 
