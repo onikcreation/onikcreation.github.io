@@ -380,17 +380,20 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .fdates input{flex:1;min-width:0;border:1px solid var(--line-2);border-radius:10px;padding:8px;background:var(--surface)}
 
 /* ================= ড্যাশবোর্ড ================= */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
-.kpi{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-2);text-align:left;cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden}
-.kpi:hover{transform:translateY(-2px)}
-.kpi .k-ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;margin-bottom:10px}
-.kpi small{color:var(--ink-2);font-size:13px;font-weight:600}
-.kpi b{font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
-.kpi span{font-size:12px;color:var(--ink-3)}
-.k-1 .k-ico{background:var(--brand-soft);color:var(--brand-text)}
-.k-2 .k-ico{background:var(--red-bg);color:var(--red)}
-.k-3 .k-ico{background:var(--violet-bg);color:var(--violet)}
-.k-4 .k-ico{background:var(--green-bg);color:var(--green)}
+/* KPI: ডেস্কটপে সব (বিশেষ ভিউসহ) এক লাইনের স্ট্রিপে, উপরে রঙিন দাগ; মোবাইলে ৩ কলামের ছোট বক্স (নিচে মোবাইল অংশে) */
+.kpis{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-2);margin-bottom:16px;overflow:hidden}
+.kpi{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:6px;align-content:start;min-width:0;background:none;border:0;border-left:1px solid var(--line);padding:16px 16px 14px;text-align:left;cursor:pointer;position:relative;transition:background .12s}
+.kpi:first-child{border-left:0}
+.kpi::before{content:"";position:absolute;left:16px;right:16px;top:0;height:3px;border-radius:0 0 3px 3px;background:var(--c)}
+.kpi:hover{background:var(--surface-2)}
+.kpi:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.kpi .k-ico{display:flex;align-items:center;background:none!important;color:var(--c)!important}
+.kpi .k-ico .ico{width:15px;height:15px}
+.kpi small{color:var(--ink-2);font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:center}
+.kpi b{grid-column:1/-1;font-size:28px;line-height:1.25;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi > span:not(.k-ico){grid-column:1/-1;font-size:11.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-1{--c:var(--brand)} .k-2{--c:var(--red)} .k-3{--c:var(--violet)} .k-4{--c:var(--green)}
+@media (min-width:900px) and (max-width:1199px){.kpi{padding:14px 12px 12px}.kpi::before{left:12px;right:12px}.kpi b{font-size:24px}}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;margin-bottom:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px;box-shadow:var(--sh-2);min-width:0}
 .card h4{margin:0 0 2px;font-size:15px;font-weight:700}
@@ -426,22 +429,41 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .days{color:var(--red);font-weight:700;background:var(--red-bg);border-radius:5px;padding:0 6px}
 /* help.ums মেইলের কার্ড (ড্যাশবোর্ড, শুধু লাইভে লগইন করা ইউজার) */
 .mail-card{margin-bottom:14px}
-.mail-card .mstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
-.mail-card .mstat{background:var(--surface-2);border-radius:12px;padding:10px 14px}
+.mail-card .mh{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap}
+.mail-card .mh h4{margin:0;display:flex;align-items:center;gap:8px}
+.mail-card .mh h4 .ico{color:var(--brand-text)}
+.mail-card .mmeta{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:7px}
+.mail-card .live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-bg);flex:0 0 auto}
+.mail-card .live.bad{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.mail-card .msync{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:6px 12px;font-size:13px;font-weight:600}
+.mail-card .msync:hover{border-color:var(--brand);color:var(--brand-text)}
+.mail-card .msync .ico{width:15px;height:15px}
+.mail-card .msync.spin .ico{animation:mspin 1s linear infinite}
+@keyframes mspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.mail-card .msync.spin .ico{animation:none}}
+.mail-card .mail-err{color:var(--red);font-size:13px;margin-top:6px}
+.mail-card .mbody{display:grid;grid-template-columns:200px minmax(0,1.5fr) minmax(0,1fr);gap:22px;margin-top:14px}
+.mail-card .mstats{display:flex;flex-direction:column;gap:10px}
+.mail-card .mstat{background:var(--surface-2);border-radius:12px;padding:12px 14px}
 .mail-card .mstat small{display:block;color:var(--ink-2);font-size:12.5px;font-weight:600}
-.mail-card .mstat b{display:block;font-size:28px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.mail-card .mstat b{display:block;font-size:32px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
 .mail-card .mstat span{font-size:12px;color:var(--ink-3)}
 .mail-card .mstat.u b{color:var(--brand-text)}
+.mail-card .mstat.p{background:var(--orange-bg)}
 .mail-card .mstat.p b{color:var(--orange)}
-.mail-card .mcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 20px}
-.mail-card h5{margin:12px 0 0;font-size:13px;color:var(--ink-2)}
-.mail-card .mini-table td{font-variant-numeric:tabular-nums}
+.mail-card .mcol{min-width:0}
+.mail-card h5{margin:0 0 2px;font-size:12px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.4px}
+.mail-card .mt-wrap{overflow-x:auto}
+.mail-card .mini-table{margin-top:4px}
+.mail-card .mini-table th,.mail-card .mini-table td{white-space:nowrap;font-variant-numeric:tabular-nums}
+.mail-card .mini-table td:first-child{white-space:normal}
 .mail-card .mini-table td.z{color:var(--ink-3)}
 .mail-card .mini-table .em{display:block;color:var(--ink-3);font-size:11.5px}
 .mail-card .mini-table tr.unk td:first-child{color:var(--red)}
 .mail-card .old-list li{padding:8px 4px}
 .mail-card .old-list .txt.unread::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brand);margin-right:6px;vertical-align:middle}
-.mail-card .mail-err{color:var(--red);font-size:13px}
+@media (max-width:1199px){.mail-card .mbody{grid-template-columns:minmax(0,1fr);gap:16px}.mail-card .mstats{flex-direction:row}.mail-card .mstat{flex:1}}
+@media (max-width:899px){.mail-card .mbody{gap:14px}.mail-card .mstat{padding:10px 12px}.mail-card .mstat b{font-size:26px}.mail-card .mstat span{display:none}.mail-card .mmeta{order:3;flex-basis:100%}.mail-card .mini-table th,.mail-card .mini-table td{padding:6px 4px;font-size:12.5px}.mail-card .mini-table .em{display:none}}
 .rep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}
 .rep-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh-1)}
 .rep-item b{font-size:24px;font-weight:800;display:block;letter-spacing:-.4px}
@@ -810,9 +832,14 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
   .m-foot .avatar{width:22px;height:22px;font-size:10.5px}
   .m-foot .grow{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-  .kpis{grid-template-columns:1fr 1fr;gap:10px}
-  .kpi{padding:14px}
-  .kpi b{font-size:26px}
+  .kpis{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;background:none;border:0;box-shadow:none;overflow:visible}
+  .kpi{display:flex;flex-direction:column-reverse;justify-content:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 10px 9px 12px;overflow:hidden}
+  .kpi:first-child{border-left:1px solid var(--line)}
+  .kpi::before{left:0;right:auto;top:10px;bottom:10px;width:3px;height:auto;border-radius:0 3px 3px 0}
+  .kpi .k-ico,.kpi > span:not(.k-ico){display:none}
+  .kpi b{font-size:20px;line-height:1.2;margin:0}
+  .kpi small,.kpi b{align-self:stretch}
+  .kpi small{font-size:11px;line-height:1.3}
   .cards{grid-template-columns:1fr}
   .drawer{left:0;top:0;width:100%;height:100%;border-radius:0;transform:translateY(100%);opacity:1}
   .drawer.on{transform:none}
@@ -1048,7 +1075,7 @@ var I18N = {
     't.noperm': 'আপনার রোলে এই কাজের অনুমতি নেই', 't.asuser': '{0} ({1}) হিসেবে দেখছেন', 't.reset': 'রিসেট হয়েছে', 't.download': '{0}টি টাস্ক ডাউনলোড হচ্ছে',
     'log.created': 'টাস্ক তৈরি হয়েছে', 'log.edit': 'এডিট: {0}',
     'dash.title': 'ড্যাশবোর্ড', 'dash.sub': 'সব শিটের ডেটা একসাথে গোনা। কার্ড বা বারে ক্লিক করলে সংশ্লিষ্ট তালিকা খুলবে।',
-    'kpi.open': 'Pending', 'kpi.top': '{0} (Pending)', 'kpi.top.s': 'অগ্রাধিকার কাজ', 'kpi.backlog': 'Backlog (ফিচার)', 'kpi.backlog.s': 'ভবিষ্যতের ফিচার আইডিয়া', 'kpi.month': 'এই মাসে এন্ট্রি',
+    'kpi.open': 'Pending', 'kpi.top': '{0} (Pending)', 'kpi.top.s': 'অগ্রাধিকার কাজ', 'kpi.backlog': 'Backlog (ফিচার)', 'kpi.backlog.s': 'ভবিষ্যতের ফিচার আইডিয়া', 'kpi.month': 'এই মাস',
     'ch.title': 'প্রতি মাসে আসা টাস্ক — এখন কোন অবস্থায়', 'ch.sub': 'এন্ট্রির তারিখ অনুযায়ী (পুরনো অনেক রো-তে তারিখ নেই, সেগুলো এখানে নেই)',
     'ch.done': 'Done', 'ch.open': 'Pending ({0})', 'ch.open.s': 'Pending', 'ch.other': 'Canceled / Backlog', 'ch.total': 'মোট', 'ch.month': 'মাস', 'ch.aria': 'প্রতি মাসে আসা টাস্কের চার্ট',
     'ch.showtable': 'টেবিল আকারে দেখাও', 'ch.hidetable': 'টেবিল লুকাও',
@@ -1059,6 +1086,7 @@ var I18N = {
     'mail.unread': '📩 Unread', 'mail.unread.s': 'কেউ এখনো খোলেননি', 'mail.pend': '⏳ রিপ্লে বাকি', 'mail.pend.s': 'টিম এখনো উত্তর দেয়নি',
     'mail.who': 'কে কতগুলো রিপ্লে দিলেন', 'mail.member': 'মেম্বার', 'mail.today': 'আজ', 'mail.week': 'এই সপ্তাহ', 'mail.month': 'এই মাস', 'mail.total': 'মোট',
     'mail.plist': 'রিপ্লে বাকি মেইল (পুরনোটা আগে)', 'mail.none': '🎉 কোনো মেইল রিপ্লে বাকি নেই', 'mail.norep': 'এখনো কোনো রিপ্লে গোনা হয়নি', 'mail.msgs': '{0}টি মেইল',
+    'mail.lmonth': 'গত মাস', 'mail.sync': 'Sync', 'mail.syncing': 'Sync হচ্ছে…', 'mail.sync.t': 'এখনই help.ums থেকে নতুন হিসাব আনুন',
     'mail.m': '{0} মিনিট আগে', 'mail.h': '{0} ঘণ্টা আগে', 'mail.d': '{0} দিন আগে',
     'rep.title': 'মাইগ্রেশন রিপোর্ট', 'rep.sub': 'এক্সেলের ৯টা শিট এক টেবিলে আনার সময় কী কী ঠিক করা হয়েছে (ধাপ ২-এর প্রিভিউ)। উৎস: {0} · তৈরি: {1}',
     'rep.sheets': 'কোন শিট থেকে কতগুলো রো', 'rep.sheets.s': 'মোট {0}টি টাস্ক এক টেবিলে এসেছে। রো কোন শিটে ছিল সেটা দেখে Status ঠিক করা হয়েছে।',
@@ -1183,7 +1211,7 @@ var I18N = {
     't.noperm': 'Your role does not have permission for this', 't.asuser': 'Viewing as {0} ({1})', 't.reset': 'Reset done', 't.download': 'Downloading {0} tasks',
     'log.created': 'Task created', 'log.edit': 'Edited: {0}',
     'dash.title': 'Dashboard', 'dash.sub': 'All sheets counted together. Click a card or bar to open that list.',
-    'kpi.open': 'Pending', 'kpi.top': '{0} (pending)', 'kpi.top.s': 'Priority work', 'kpi.backlog': 'Backlog (features)', 'kpi.backlog.s': 'Future feature ideas', 'kpi.month': 'Entered this month',
+    'kpi.open': 'Pending', 'kpi.top': '{0} (pending)', 'kpi.top.s': 'Priority work', 'kpi.backlog': 'Backlog (features)', 'kpi.backlog.s': 'Future feature ideas', 'kpi.month': 'This Month',
     'ch.title': 'Tasks entered per month — current state', 'ch.sub': 'By entry date (many old rows have no date and are not shown)',
     'ch.done': 'Done', 'ch.open': 'Pending ({0})', 'ch.open.s': 'Pending', 'ch.other': 'Canceled / Backlog', 'ch.total': 'Total', 'ch.month': 'Month', 'ch.aria': 'Chart of tasks entered per month',
     'ch.showtable': 'Show as table', 'ch.hidetable': 'Hide table',
@@ -1194,6 +1222,7 @@ var I18N = {
     'mail.unread': '📩 Unread', 'mail.unread.s': 'Not opened by anyone yet', 'mail.pend': '⏳ Awaiting reply', 'mail.pend.s': 'Team has not answered yet',
     'mail.who': 'Replies by member', 'mail.member': 'Member', 'mail.today': 'Today', 'mail.week': 'This week', 'mail.month': 'This month', 'mail.total': 'Total',
     'mail.plist': 'Mails awaiting reply (oldest first)', 'mail.none': '🎉 No mail awaiting reply', 'mail.norep': 'No replies counted yet', 'mail.msgs': '{0} mails',
+    'mail.lmonth': 'Last month', 'mail.sync': 'Sync', 'mail.syncing': 'Syncing…', 'mail.sync.t': 'Fetch fresh numbers from help.ums now',
     'mail.m': '{0} min ago', 'mail.h': '{0} h ago', 'mail.d': '{0} days ago',
     'rep.title': 'Migration Report', 'rep.sub': 'What was fixed while merging the 9 Excel sheets into one table (step 2 preview). Source: {0} · Built: {1}',
     'rep.sheets': 'Rows per sheet', 'rep.sheets.s': '{0} tasks merged into one table. Status was set from the sheet each row was in.',
@@ -1585,6 +1614,8 @@ var ICON = {
   chev: '<path d="m6 9 6 6 6-6"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   reset: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+  sync: '<path d="M20 11a8 8 0 0 0-14.7-4M4 5v4h4M4 13a8 8 0 0 0 14.7 4M20 19v-4h-4"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
   gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   trash: '<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
   users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
@@ -2801,7 +2832,7 @@ function renderDash() {
   var openLabel = listOf('status').filter(function (o) { return o.group === 'open'; }).map(function (o) { return stLabel(o.name); }).join(' + ');
   var monthKey = nowIso().slice(0, 7);
   var thisMonth = tasks.filter(function (t) { return (t.createdAt || '').slice(0, 7) === monthKey; }).length;
-  var kpi = function (cls, icon, label, n, sub, act) { return '<button class="kpi ' + cls + '" data-dash="' + act + '"><span class="k-ico">' + ic(icon) + '</span><small>' + label + '</small><b>' + n + '</b><span>' + sub + '</span></button>'; };
+  var kpi = function (cls, icon, label, n, sub, act) { return '<button class="kpi ' + cls + '" data-dash="' + act + '"><span class="k-ico">' + ic(icon) + '</span><small title="' + label + '">' + label + '</small><b>' + n + '</b><span>' + sub + '</span></button>'; };
   var B = T('f.blank');
   var barsOf = function (list, title, sub, field, fkey) { var keep = open; open = list; var html = bars(title, sub, field, null, fkey); open = keep; return html; };
   var bars = function (title, sub, field, order, fkey) {
@@ -2829,15 +2860,12 @@ function renderDash() {
     kpi('k-2', 'flame', T('kpi.top', esc(top2.join(' + '))), urgentTop, T('kpi.top.s'), 'urgenttop') +
     kpi('k-3', 'bulb', T('kpi.backlog'), backlog, T('kpi.backlog.s'), 'backlog') +
     kpi('k-4', 'cal', T('kpi.month'), thisMonth, MONTHS[new Date().getMonth()] + ' ' + new Date().getFullYear(), 'month') +
+    // বিশেষ ভিউগুলো (Our Task, Liton Vai …) একই স্ট্রিপে
+    (store.settings.views || []).filter(function (v) { return v.active; }).map(function (v) {
+      var n = open.filter(function (t) { return matchView(t, v); }).length;
+      return '<button class="kpi vkpi" data-tab="v:' + esc(v.id) + '" style="--c:' + v.color + '"><span class="k-ico">' + ic('layers') + '</span><small title="' + esc(v.name) + '">' + esc(v.name) + '</small><b>' + n + '</b><span>' + T('view.open.s') + '</span></button>';
+    }).join('') +
     '</div>' +
-    (function () {
-      var vv = (store.settings.views || []).filter(function (v) { return v.active; });
-      if (!vv.length) return '';
-      return '<div class="kpis vkpis">' + vv.map(function (v) {
-        var n = open.filter(function (t) { return matchView(t, v); }).length;
-        return '<button class="kpi" data-tab="v:' + esc(v.id) + '" style="--c:' + v.color + '"><span class="k-ico" style="background:color-mix(in srgb,var(--c) 15%,var(--surface));color:var(--c)">' + ic('layers') + '</span><small>' + esc(v.name) + '</small><b>' + n + '</b><span>' + T('view.open.s') + '</span></button>';
-      }).join('') + '</div>';
-    })() +
     (mailCardOn() ? '<div class="card mail-card" id="mailCard">' + mailCardHtml() + '</div>' : '') +
     '<div class="card" style="margin-bottom:14px"><h4>' + T('chd.title') + '</h4><div class="sub">' + T('chd.sub', MONTHS[new Date().getMonth()] + ' ' + new Date().getFullYear()) + '</div>' +
     '<div class="legend"><span><i style="background:var(--series-1)"></i>' + T('ch.done') + '</span><span><i style="background:var(--series-2)"></i>' + T('ch.open', esc(openLabel)) + '</span><span><i style="background:var(--series-3)"></i>' + T('ch.other') + '</span><span class="day-sum" id="daySum"></span></div>' +
@@ -2874,24 +2902,28 @@ function mailCardOn() {
 }
 function mailCardHtml() {
   var s = MAIL.data;
-  var head = '<h4>' + T('mail.title') + '</h4><div class="sub">' + (s ? T('mail.sub', esc(s.updated)) : T('mail.loading')) + '</div>' +
+  var head = '<div class="mh"><h4>' + ic('mail') + T('mail.title') + '</h4><span class="mmeta"><span class="live' + (MAIL.err ? ' bad' : '') + '"></span>' +
+    (s ? T('mail.sub', esc(s.updated)) : T('mail.loading')) + '</span>' +
+    '<button type="button" class="msync' + (MAIL.busy ? ' spin' : '') + '" id="mailSync" title="' + T('mail.sync.t') + '">' + ic('sync') + '<span>' + T(MAIL.busy ? 'mail.syncing' : 'mail.sync') + '</span></button></div>' +
     (MAIL.err ? '<div class="mail-err">' + esc(T('mail.err', MAIL.err)) + '</div>' : '');
   if (!s) return head;
-  var cell = function (n) { return '<td' + (n ? '' : ' class="z"') + '>' + n + '</td>'; };
+  // lastMonth আসে নতুন Apps Script থেকে; পুরনো Script হলে "–"
+  var cell = function (n) { return n == null ? '<td class="z">–</td>' : '<td' + (n ? '' : ' class="z"') + '>' + n + '</td>'; };
   var ago = function (ts) {
     var m = Math.max(0, Math.round((Date.now() - ts) / 60000)), h = Math.round(m / 60);
     return m < 60 ? T('mail.m', m) : h < 24 ? T('mail.h', h) : T('mail.d', Math.round(h / 24));
   };
+  // তিন ভাগ: বাঁয়ে দুই বড় সংখ্যা, মাঝে মেম্বার টেবিল, ডানে রিপ্লে বাকি তালিকা
   return head +
-    '<div class="mstats"><div class="mstat u"><small>' + T('mail.unread') + '</small><b>' + s.unread + '</b><span>' + T('mail.unread.s') + '</span></div>' +
+    '<div class="mbody"><div class="mstats"><div class="mstat u"><small>' + T('mail.unread') + '</small><b>' + s.unread + '</b><span>' + T('mail.unread.s') + '</span></div>' +
     '<div class="mstat p"><small>' + T('mail.pend') + '</small><b>' + s.pending.count + (s.pending.capped ? '+' : '') + '</b><span>' + T('mail.pend.s') + '</span></div></div>' +
-    '<div class="mcols"><div><h5>' + T('mail.who') + '</h5><table class="mini-table"><thead><tr><th>' + T('mail.member') + '</th><th>' + T('mail.today') + '</th><th>' +
-    T('mail.week') + '</th><th>' + T('mail.month') + '</th><th>' + T('mail.total') + '</th></tr></thead><tbody>' +
+    '<div class="mcol"><h5>' + T('mail.who') + '</h5><div class="mt-wrap"><table class="mini-table"><thead><tr><th>' + T('mail.member') + '</th><th>' + T('mail.today') + '</th><th>' +
+    T('mail.week') + '</th><th>' + T('mail.month') + '</th><th>' + T('mail.lmonth') + '</th><th>' + T('mail.total') + '</th></tr></thead><tbody>' +
     (s.members.length ? s.members.map(function (r) {
       return '<tr' + (r.email ? '' : ' class="unk"') + '><td>' + esc(r.name) + (r.email && r.email !== r.name ? '<span class="em">' + esc(r.email) + '</span>' : '') + '</td>' +
-        cell(r.today) + cell(r.week) + cell(r.month) + cell(r.total) + '</tr>';
-    }).join('') : '<tr><td colspan="5">' + T('mail.norep') + '</td></tr>') + '</tbody></table></div>' +
-    '<div><h5>' + T('mail.plist') + '</h5><ul class="old-list">' +
+        cell(r.today) + cell(r.week) + cell(r.month) + cell(r.lastMonth) + cell(r.total) + '</tr>';
+    }).join('') : '<tr><td colspan="6">' + T('mail.norep') + '</td></tr>') + '</tbody></table></div></div>' +
+    '<div class="mcol"><h5>' + T('mail.plist') + '</h5><ul class="old-list">' +
     (s.pending.list.length ? s.pending.list.map(function (p) {
       return '<li><div class="meta"><span class="days">' + ago(p.ts) + '</span>' + esc(p.from) + (p.count > 1 ? ' · ' + T('mail.msgs', p.count) : '') + '</div>' +
         '<div class="txt' + (p.unread ? ' unread' : '') + '">' + esc(p.subject) + '</div></li>';
@@ -2905,19 +2937,22 @@ function mailDashStart() {
   }, 30000);
   if (Date.now() - MAIL.at > 25000) mailDashLoad();
 }
-function mailDashLoad() {
+// force = Sync বাটন: Apps Script-এর ২০ সেকেন্ডের ক্যাশ বাদ দিয়ে এখনই নতুন হিসাব
+function mailDashLoad(force) {
   if (MAIL.busy || MAIL.off) return;
   var M = MAIL; M.busy = true;
+  var sb = $('mailSync'); if (sb) { sb.classList.add('spin'); sb.querySelector('span').textContent = T('mail.syncing'); }
   var paint = function () { M.busy = false; var c = $('mailCard'); if (M !== MAIL) return; if (M.off) { if (c) c.remove(); } else if (c) c.innerHTML = mailCardHtml(); };
   var getUrl = M.url !== null ? Promise.resolve(M.url) : api('getMailDash').then(function (r) { return (M.url = (r && r.url) || ''); }, function () { return (M.url = ''); });
   getUrl.then(function (url) {
     if (!url) { M.off = true; return; }
-    return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'format=json').then(function (r) { return r.json(); }).then(function (s) {
+    return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'format=json' + (force ? '&force=1' : '')).then(function (r) { return r.json(); }).then(function (s) {
       if (s.error) throw new Error(s.error);
       M.data = s; M.err = ''; M.at = Date.now();
     });
   }).catch(function (e) { M.err = String((e && e.message) || e); M.at = Date.now(); }).then(paint);
 }
+document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#mailSync')) mailDashLoad(true); });
 function monthData() {
   var d = new Date(), out = [];
   for (var i = 11; i >= 0; i--) {
