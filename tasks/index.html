@@ -424,6 +424,24 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .old-list .meta{font-size:12px;color:var(--ink-3);display:flex;gap:6px;align-items:center}
 .old-list .txt{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px;font-weight:600}
 .days{color:var(--red);font-weight:700;background:var(--red-bg);border-radius:5px;padding:0 6px}
+/* help.ums মেইলের কার্ড (ড্যাশবোর্ড, শুধু লাইভে লগইন করা ইউজার) */
+.mail-card{margin-bottom:14px}
+.mail-card .mstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.mail-card .mstat{background:var(--surface-2);border-radius:12px;padding:10px 14px}
+.mail-card .mstat small{display:block;color:var(--ink-2);font-size:12.5px;font-weight:600}
+.mail-card .mstat b{display:block;font-size:28px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.mail-card .mstat span{font-size:12px;color:var(--ink-3)}
+.mail-card .mstat.u b{color:var(--brand-text)}
+.mail-card .mstat.p b{color:var(--orange)}
+.mail-card .mcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 20px}
+.mail-card h5{margin:12px 0 0;font-size:13px;color:var(--ink-2)}
+.mail-card .mini-table td{font-variant-numeric:tabular-nums}
+.mail-card .mini-table td.z{color:var(--ink-3)}
+.mail-card .mini-table .em{display:block;color:var(--ink-3);font-size:11.5px}
+.mail-card .mini-table tr.unk td:first-child{color:var(--red)}
+.mail-card .old-list li{padding:8px 4px}
+.mail-card .old-list .txt.unread::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brand);margin-right:6px;vertical-align:middle}
+.mail-card .mail-err{color:var(--red);font-size:13px}
 .rep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}
 .rep-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh-1)}
 .rep-item b{font-size:24px;font-weight:800;display:block;letter-spacing:-.4px}
@@ -1037,6 +1055,11 @@ var I18N = {
     'b.priority': 'Pending — Priority', 'b.platform': 'Pending — Platform', 'b.platform.s': 'কোন সিস্টেমে কত কাজ', 'b.type': 'Pending — Task Type', 'b.type.s': 'Bug, Feature, Developer Help',
     'b.dept': 'Pending — কোন বিভাগ থেকে', 'b.dept.s': 'Issued By (বিভাগ)', 'b.progress': 'Pending — Progress', 'b.progress.s': 'কাজ কোন ধাপে আছে', 'b.click': '{0}: {1}টি — ক্লিক করলে তালিকা দেখাবে',
     'old.title': 'সবচেয়ে পুরনো Pending কাজ', 'old.sub': 'যেগুলো সবচেয়ে বেশি দিন ধরে Pending আছে', 'old.days': '{0} দিন',
+    'mail.title': 'help.ums মেইল', 'mail.sub': 'শেষ আপডেট: {0} · ৩০ সেকেন্ড পরপর', 'mail.loading': 'লোড হচ্ছে…', 'mail.err': 'মেইলের হিসাব আনা যায়নি: {0}',
+    'mail.unread': '📩 Unread', 'mail.unread.s': 'কেউ এখনো খোলেননি', 'mail.pend': '⏳ রিপ্লে বাকি', 'mail.pend.s': 'টিম এখনো উত্তর দেয়নি',
+    'mail.who': 'কে কতগুলো রিপ্লে দিলেন', 'mail.member': 'মেম্বার', 'mail.today': 'আজ', 'mail.week': 'এই সপ্তাহ', 'mail.month': 'এই মাস', 'mail.total': 'মোট',
+    'mail.plist': 'রিপ্লে বাকি মেইল (পুরনোটা আগে)', 'mail.none': '🎉 কোনো মেইল রিপ্লে বাকি নেই', 'mail.norep': 'এখনো কোনো রিপ্লে গোনা হয়নি', 'mail.msgs': '{0}টি মেইল',
+    'mail.m': '{0} মিনিট আগে', 'mail.h': '{0} ঘণ্টা আগে', 'mail.d': '{0} দিন আগে',
     'rep.title': 'মাইগ্রেশন রিপোর্ট', 'rep.sub': 'এক্সেলের ৯টা শিট এক টেবিলে আনার সময় কী কী ঠিক করা হয়েছে (ধাপ ২-এর প্রিভিউ)। উৎস: {0} · তৈরি: {1}',
     'rep.sheets': 'কোন শিট থেকে কতগুলো রো', 'rep.sheets.s': 'মোট {0}টি টাস্ক এক টেবিলে এসেছে। রো কোন শিটে ছিল সেটা দেখে Status ঠিক করা হয়েছে।',
     'rep.col.sheet': 'মূল শিট', 'rep.col.rows': 'রো', 'rep.col.status': 'নতুন Status',
@@ -1167,6 +1190,11 @@ var I18N = {
     'b.priority': 'Pending — Priority', 'b.platform': 'Pending — Platform', 'b.platform.s': 'Work per system', 'b.type': 'Pending — Task Type', 'b.type.s': 'Bug, Feature, Developer Help',
     'b.dept': 'Pending — by Department', 'b.dept.s': 'Issued By (department)', 'b.progress': 'Pending — Progress', 'b.progress.s': 'Which stage the work is in', 'b.click': '{0}: {1} — click to see the list',
     'old.title': 'Oldest pending tasks', 'old.sub': 'Pending for the longest time', 'old.days': '{0} days',
+    'mail.title': 'help.ums mail', 'mail.sub': 'Last update: {0} · every 30 seconds', 'mail.loading': 'Loading…', 'mail.err': 'Could not load mail stats: {0}',
+    'mail.unread': '📩 Unread', 'mail.unread.s': 'Not opened by anyone yet', 'mail.pend': '⏳ Awaiting reply', 'mail.pend.s': 'Team has not answered yet',
+    'mail.who': 'Replies by member', 'mail.member': 'Member', 'mail.today': 'Today', 'mail.week': 'This week', 'mail.month': 'This month', 'mail.total': 'Total',
+    'mail.plist': 'Mails awaiting reply (oldest first)', 'mail.none': '🎉 No mail awaiting reply', 'mail.norep': 'No replies counted yet', 'mail.msgs': '{0} mails',
+    'mail.m': '{0} min ago', 'mail.h': '{0} h ago', 'mail.d': '{0} days ago',
     'rep.title': 'Migration Report', 'rep.sub': 'What was fixed while merging the 9 Excel sheets into one table (step 2 preview). Source: {0} · Built: {1}',
     'rep.sheets': 'Rows per sheet', 'rep.sheets.s': '{0} tasks merged into one table. Status was set from the sheet each row was in.',
     'rep.col.sheet': 'Original sheet', 'rep.col.rows': 'Rows', 'rep.col.status': 'New Status',
@@ -1709,7 +1737,7 @@ var NO_TOKEN = {requestLoginCode: true, verifyLoginCode: true};
 // আগের Apps Script ফাংশনের নাম → ডেটাবেসের RPC (আর্গুমেন্ট একই ক্রমে অ্যারে হিসেবে যায়)
 var RPC = {getBootstrap: 'get_bootstrap', getUpdates: 'get_updates', saveTask: 'save_task', setTaskStatus: 'set_task_status', addDiscussion: 'add_discussion',
   deleteTask: 'delete_task', restoreTask: 'restore_task', purgeTask: 'purge_task', importTasks: 'import_tasks', removeImportBatch: 'remove_import_batch',
-  saveSettings: 'save_settings', renameOption: 'rename_option', saveUsers: 'save_users', savePrefs: 'save_prefs', getArchive: 'get_archive'};
+  saveSettings: 'save_settings', renameOption: 'rename_option', saveUsers: 'save_users', savePrefs: 'save_prefs', getArchive: 'get_archive', getMailDash: 'get_mail_dash'};
 // Supabase Auth-এর ইংরেজি এরর → বাংলা
 function authErr(e) {
   var m = String((e && e.message) || e || '');
@@ -2810,6 +2838,7 @@ function renderDash() {
         return '<button class="kpi" data-tab="v:' + esc(v.id) + '" style="--c:' + v.color + '"><span class="k-ico" style="background:color-mix(in srgb,var(--c) 15%,var(--surface));color:var(--c)">' + ic('layers') + '</span><small>' + esc(v.name) + '</small><b>' + n + '</b><span>' + T('view.open.s') + '</span></button>';
       }).join('') + '</div>';
     })() +
+    (mailCardOn() ? '<div class="card mail-card" id="mailCard">' + mailCardHtml() + '</div>' : '') +
     '<div class="card" style="margin-bottom:14px"><h4>' + T('chd.title') + '</h4><div class="sub">' + T('chd.sub', MONTHS[new Date().getMonth()] + ' ' + new Date().getFullYear()) + '</div>' +
     '<div class="legend"><span><i style="background:var(--series-1)"></i>' + T('ch.done') + '</span><span><i style="background:var(--series-2)"></i>' + T('ch.open', esc(openLabel)) + '</span><span><i style="background:var(--series-3)"></i>' + T('ch.other') + '</span><span class="day-sum" id="daySum"></span></div>' +
     '<div class="chart-wrap" id="dayChart"></div>' +
@@ -2833,6 +2862,61 @@ function renderDash() {
     oldHtml +
     '</div>';
   drawMonthChart();
+  mailDashStart();
+}
+/* help.ums মেইলের হিসাব — help.ums-এর Apps Script ড্যাশবোর্ড থেকে আসে।
+   তার লিংক (গোপন key-সহ) ডেটাবেসে থাকে, শুধু লগইন করা ইউজার getMailDash দিয়ে পায়; লিংক না থাকলে কার্ড দেখায় না */
+var MAIL = {url: null, user: '', data: null, err: '', at: 0, busy: false, off: false, timer: 0};
+function mailCardOn() {
+  if (!IS_LIVE || me().guest) return false;
+  if (MAIL.user !== me().email) MAIL = {url: null, user: me().email, data: null, err: '', at: 0, busy: false, off: false, timer: MAIL.timer};
+  return !MAIL.off;
+}
+function mailCardHtml() {
+  var s = MAIL.data;
+  var head = '<h4>' + T('mail.title') + '</h4><div class="sub">' + (s ? T('mail.sub', esc(s.updated)) : T('mail.loading')) + '</div>' +
+    (MAIL.err ? '<div class="mail-err">' + esc(T('mail.err', MAIL.err)) + '</div>' : '');
+  if (!s) return head;
+  var cell = function (n) { return '<td' + (n ? '' : ' class="z"') + '>' + n + '</td>'; };
+  var ago = function (ts) {
+    var m = Math.max(0, Math.round((Date.now() - ts) / 60000)), h = Math.round(m / 60);
+    return m < 60 ? T('mail.m', m) : h < 24 ? T('mail.h', h) : T('mail.d', Math.round(h / 24));
+  };
+  return head +
+    '<div class="mstats"><div class="mstat u"><small>' + T('mail.unread') + '</small><b>' + s.unread + '</b><span>' + T('mail.unread.s') + '</span></div>' +
+    '<div class="mstat p"><small>' + T('mail.pend') + '</small><b>' + s.pending.count + (s.pending.capped ? '+' : '') + '</b><span>' + T('mail.pend.s') + '</span></div></div>' +
+    '<div class="mcols"><div><h5>' + T('mail.who') + '</h5><table class="mini-table"><thead><tr><th>' + T('mail.member') + '</th><th>' + T('mail.today') + '</th><th>' +
+    T('mail.week') + '</th><th>' + T('mail.month') + '</th><th>' + T('mail.total') + '</th></tr></thead><tbody>' +
+    (s.members.length ? s.members.map(function (r) {
+      return '<tr' + (r.email ? '' : ' class="unk"') + '><td>' + esc(r.name) + (r.email && r.email !== r.name ? '<span class="em">' + esc(r.email) + '</span>' : '') + '</td>' +
+        cell(r.today) + cell(r.week) + cell(r.month) + cell(r.total) + '</tr>';
+    }).join('') : '<tr><td colspan="5">' + T('mail.norep') + '</td></tr>') + '</tbody></table></div>' +
+    '<div><h5>' + T('mail.plist') + '</h5><ul class="old-list">' +
+    (s.pending.list.length ? s.pending.list.map(function (p) {
+      return '<li><div class="meta"><span class="days">' + ago(p.ts) + '</span>' + esc(p.from) + (p.count > 1 ? ' · ' + T('mail.msgs', p.count) : '') + '</div>' +
+        '<div class="txt' + (p.unread ? ' unread' : '') + '">' + esc(p.subject) + '</div></li>';
+    }).join('') : '<li class="meta">' + T('mail.none') + '</li>') + '</ul></div></div>';
+}
+function mailDashStart() {
+  if (!$('mailCard')) return;
+  if (!MAIL.timer) MAIL.timer = setInterval(function () {
+    if (!$('mailCard') || ui.view !== 'dash') { clearInterval(MAIL.timer); MAIL.timer = 0; return; }
+    if (!document.hidden) mailDashLoad();
+  }, 30000);
+  if (Date.now() - MAIL.at > 25000) mailDashLoad();
+}
+function mailDashLoad() {
+  if (MAIL.busy || MAIL.off) return;
+  var M = MAIL; M.busy = true;
+  var paint = function () { M.busy = false; var c = $('mailCard'); if (M !== MAIL) return; if (M.off) { if (c) c.remove(); } else if (c) c.innerHTML = mailCardHtml(); };
+  var getUrl = M.url !== null ? Promise.resolve(M.url) : api('getMailDash').then(function (r) { return (M.url = (r && r.url) || ''); }, function () { return (M.url = ''); });
+  getUrl.then(function (url) {
+    if (!url) { M.off = true; return; }
+    return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'format=json').then(function (r) { return r.json(); }).then(function (s) {
+      if (s.error) throw new Error(s.error);
+      M.data = s; M.err = ''; M.at = Date.now();
+    });
+  }).catch(function (e) { M.err = String((e && e.message) || e); M.at = Date.now(); }).then(paint);
 }
 function monthData() {
   var d = new Date(), out = [];
