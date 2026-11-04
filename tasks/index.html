@@ -123,6 +123,8 @@ a{color:var(--blue)}
 .nav-item.active{background:var(--brand-soft);color:var(--brand-text)}
 .nav-item .dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
 .nav-item .n{margin-left:auto;font-size:12px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.nav-item .mail-n{color:#fff;background:#E5484D;border-radius:999px;padding:0 7px;line-height:19px;min-width:19px;text-align:center}
+.bn-mail{position:absolute;top:4px;left:calc(50% + 5px);font-style:normal;font-size:10px;font-weight:800;color:#fff;background:#E5484D;border-radius:999px;padding:0 5px;line-height:16px;min-width:16px;text-align:center}
 .nav-item.active .n{color:var(--brand-text)}
 .side-card{margin:18px 4px 0;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;color:var(--ink-2);line-height:1.5}
 .side-card b{color:var(--ink)}
@@ -898,7 +900,7 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
   .form-grid{grid-template-columns:1fr}
 
   .bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 16px rgba(20,22,37,.05)}
-  .bottomnav button{background:none;border:0;padding:8px 0 7px;font-size:11px;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:600}
+  .bottomnav button{position:relative;background:none;border:0;padding:8px 0 7px;font-size:11px;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:600}
   .bottomnav button .ico{width:22px;height:22px}
   .bottomnav button.active{color:var(--brand)}
   .bottomnav .bn-add{position:relative}
@@ -1005,7 +1007,7 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
 
 <nav class="bottomnav" id="bottomnav">
   <button data-view="list" class="active"><svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span data-i18n="nav.list"></span></button>
-  <button data-view="dash"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span data-i18n="nav.dash"></span></button>
+  <button data-view="dash"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span data-i18n="nav.dash"></span><i class="bn-mail hidden" id="bnMail"></i></button>
   <button class="bn-add" id="bnAdd" data-i18n-title="new.task"><span><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><b data-i18n="nav.new" style="font-weight:600"></b></button>
   <button data-open-theme><svg class="ico" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 0 0 0 20c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H16a6 6 0 0 0 6-6c0-4.9-4.5-8.6-10-8.6z"/></svg><span data-i18n="nav.theme"></span></button>
   <button data-act="filter"><svg class="ico" viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg><span data-i18n="filter"></span></button>
@@ -1116,7 +1118,7 @@ var I18N = {
     'mail.unread': '📩 Unread', 'mail.unread.s': 'কেউ এখনো খোলেননি', 'mail.pend': '⏳ রিপ্লে বাকি', 'mail.pend.s': 'টিম এখনো উত্তর দেয়নি',
     'mail.who': 'কে কতগুলো রিপ্লে দিলেন', 'mail.member': 'মেম্বার', 'mail.today': 'আজ', 'mail.week': 'এই সপ্তাহ', 'mail.month': 'এই মাস', 'mail.total': 'মোট',
     'mail.plist': 'রিপ্লে বাকি মেইল (পুরনোটা আগে)', 'mail.none': '🎉 কোনো মেইল রিপ্লে বাকি নেই', 'mail.norep': 'এখনো কোনো রিপ্লে গোনা হয়নি', 'mail.msgs': '{0}টি মেইল',
-    'mail.lmonth': 'গত মাস', 'mail.sync': 'Sync', 'mail.syncing': 'Sync হচ্ছে…', 'mail.sync.t': 'এখনই help.ums থেকে নতুন হিসাব আনুন',
+    'mail.lmonth': 'গত মাস', 'mail.badge.t': 'help.ums-এ না পড়া মেইল — চাপলে Dashboard-এর মেইল কার্ড', 'mail.sync': 'Sync', 'mail.syncing': 'Sync হচ্ছে…', 'mail.sync.t': 'এখনই help.ums থেকে নতুন হিসাব আনুন',
     'mail.m': '{0} মিনিট আগে', 'mail.h': '{0} ঘণ্টা আগে', 'mail.d': '{0} দিন আগে',
     'rep.title': 'মাইগ্রেশন রিপোর্ট', 'rep.sub': 'এক্সেলের ৯টা শিট এক টেবিলে আনার সময় কী কী ঠিক করা হয়েছে (ধাপ ২-এর প্রিভিউ)। উৎস: {0} · তৈরি: {1}',
     'rep.sheets': 'কোন শিট থেকে কতগুলো রো', 'rep.sheets.s': 'মোট {0}টি টাস্ক এক টেবিলে এসেছে। রো কোন শিটে ছিল সেটা দেখে Status ঠিক করা হয়েছে।',
@@ -1253,7 +1255,7 @@ var I18N = {
     'mail.unread': '📩 Unread', 'mail.unread.s': 'Not opened by anyone yet', 'mail.pend': '⏳ Awaiting reply', 'mail.pend.s': 'Team has not answered yet',
     'mail.who': 'Replies by member', 'mail.member': 'Member', 'mail.today': 'Today', 'mail.week': 'This week', 'mail.month': 'This month', 'mail.total': 'Total',
     'mail.plist': 'Mails awaiting reply (oldest first)', 'mail.none': '🎉 No mail awaiting reply', 'mail.norep': 'No replies counted yet', 'mail.msgs': '{0} mails',
-    'mail.lmonth': 'Last month', 'mail.sync': 'Sync', 'mail.syncing': 'Syncing…', 'mail.sync.t': 'Fetch fresh numbers from help.ums now',
+    'mail.lmonth': 'Last month', 'mail.badge.t': 'Unread mail in help.ums — click for the mail card on the Dashboard', 'mail.sync': 'Sync', 'mail.syncing': 'Syncing…', 'mail.sync.t': 'Fetch fresh numbers from help.ums now',
     'mail.m': '{0} min ago', 'mail.h': '{0} h ago', 'mail.d': '{0} days ago',
     'rep.title': 'Migration Report', 'rep.sub': 'What was fixed while merging the 9 Excel sheets into one table (step 2 preview). Source: {0} · Built: {1}',
     'rep.sheets': 'Rows per sheet', 'rep.sheets.s': '{0} tasks merged into one table. Status was set from the sheet each row was in.',
@@ -1352,7 +1354,8 @@ function applyStatic() {
   var g = store.settings.general;
   $('appName').textContent = g.appName || 'Task Tracker';
   $('appSub').textContent = g.appSub || T('app.sub');
-  document.title = (g.appName || 'Task Tracker') + ' — UUU';
+  TITLE_BASE = (g.appName || 'Task Tracker') + ' — UUU';
+  document.title = mailTitle();
 }
 function setLang(l) {
   lang = l; lsSet(LANG_KEY, l); persistPrefs();
@@ -2252,6 +2255,7 @@ function renderSide(counts) {
     '<h6>' + T('side.analysis') + '</h6>' +
     '<button class="nav-item' + (ui.view === 'dash' ? ' active' : '') + '" data-view="dash">' + ic('chart') + T('nav.dash') + '</button>' +
     '<button class="nav-item' + (ui.view === 'notes' ? ' active' : '') + '" data-view="notes">' + ic('file') + T('rn.title') + '</button>' +
+    (mailCardOn() ? '<button class="nav-item" data-mailgo title="' + esc(T('mail.badge.t')) + '">' + ic('mail') + T('mail.title') + mailBadgeHtml() + '</button>' : '') +
     ((can('settings') || can('delete')) ? '<h6>' + T('side.admin') + '</h6>' : '') +
     (can('settings') ? '<button class="nav-item' + (ui.view === 'settings' ? ' active' : '') + '" data-view="settings">' + ic('gear') + T('side.settings') + '</button>' : '') +
     (can('delete') ? '<button class="nav-item' + (ui.view === 'trash' ? ' active' : '') + '" data-view="trash">' + ic('trash') + T('trash.title') + '<span class="n">' + trash.length + '</span></button>' : '') +
@@ -2930,7 +2934,7 @@ function renderDash() {
    তার লিংক (গোপন key-সহ) ডেটাবেসে থাকে, শুধু লগইন করা ইউজার getMailDash দিয়ে পায়; লিংক না থাকলে কার্ড দেখায় না */
 var MAIL = {url: null, user: '', data: null, err: '', at: 0, busy: false, off: false, timer: 0};
 function mailCardOn() {
-  if (!IS_LIVE || me().guest) return false;
+  if (!IS_LIVE || me().guest || !MAIL) return false;
   if (MAIL.user !== me().email) MAIL = {url: null, user: me().email, data: null, err: '', at: 0, busy: false, off: false, timer: MAIL.timer};
   return !MAIL.off;
 }
@@ -2982,11 +2986,50 @@ function mailDashLoad(force) {
     if (!url) { M.off = true; return; }
     return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'format=json' + (force ? '&force=1' : '')).then(function (r) { return r.json(); }).then(function (s) {
       if (s.error) throw new Error(s.error);
-      M.data = s; M.err = ''; M.at = Date.now();
+      M.data = s; M.err = ''; M.at = Date.now(); setMailUnread(s.unread);
     });
   }).catch(function (e) { M.err = String((e && e.message) || e); M.at = Date.now(); }).then(paint);
 }
 document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#mailSync')) mailDashLoad(true); });
+/* ---- help.ums Unread ব্যাজ (সাইড প্যানেল, মোবাইলের Dashboard আইকন, ট্যাবের নাম) ----
+   সব পেইজে চলে, তাই পুরো হিসাব না — Apps Script-এর format=unread (শুধু Unread, সেখানে ৩০ সেকেন্ড ক্যাশ)।
+   ট্যাব সামনে থাকলে প্রতি ৬০ সেকেন্ডে; লুকানো থাকলে বন্ধ, ফিরে এলে সাথে সাথে। */
+var TITLE_BASE = TITLE_BASE || document.title, MAIL_BADGE = {n: null, busy: false, at: 0, user: ''};
+var MAIL_BADGE_MS = 60000;
+function mailTitle() { var n = MAIL_BADGE && MAIL_BADGE.n; return (mailCardOn() && n > 0 ? '(' + n + ') ' : '') + TITLE_BASE; }
+function mailBadgeHtml() { var n = MAIL_BADGE && MAIL_BADGE.n; return n > 0 ? '<span class="n mail-n">' + n + '</span>' : ''; }
+function setMailUnread(n) {
+  n = typeof n === 'number' ? n : null;
+  MAIL_BADGE.n = n; MAIL_BADGE.at = Date.now();
+  var b = document.querySelector('#side [data-mailgo]');
+  if (b) { var old = b.querySelector('.mail-n'); if (old) old.remove(); if (n > 0) b.insertAdjacentHTML('beforeend', mailBadgeHtml()); }
+  var bn = $('bnMail'); if (bn) { bn.textContent = n > 99 ? '99+' : (n || ''); bn.classList.toggle('hidden', !(mailCardOn() && n > 0)); }
+  document.title = mailTitle();
+}
+function mailBadgeTick(now) {
+  if (!mailCardOn()) { if (MAIL_BADGE.n !== null) setMailUnread(null); return; }
+  if (MAIL_BADGE.user !== me().email) { MAIL_BADGE.user = me().email; MAIL_BADGE.n = null; MAIL_BADGE.at = 0; }
+  if (MAIL_BADGE.busy || document.hidden || (!now && Date.now() - MAIL_BADGE.at < MAIL_BADGE_MS - 2000)) return;
+  MAIL_BADGE.busy = true;
+  var M = MAIL;
+  var getUrl = M.url !== null ? Promise.resolve(M.url) : api('getMailDash').then(function (r) { return (M.url = (r && r.url) || ''); }, function () { return (M.url = ''); });
+  getUrl.then(function (url) {
+    if (!url) { M.off = true; setMailUnread(null); renderSide(null); return; }
+    return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'format=unread').then(function (x) { return x.json(); }).then(function (j) {
+      // পুরনো Apps Script (format=unread নেই) HTML পেইজ ফেরত দেয় → json() ভুল; তখন চুপচাপ বাদ
+      if (j && typeof j.unread === 'number') setMailUnread(j.unread);
+    });
+  }).catch(function () { MAIL_BADGE.at = Date.now(); }).then(function () { MAIL_BADGE.busy = false; });
+}
+setInterval(function () { mailBadgeTick(false); }, 15000);
+document.addEventListener('visibilitychange', function () { if (!document.hidden && Date.now() - MAIL_BADGE.at > 30000) mailBadgeTick(true); });
+setTimeout(function () { mailBadgeTick(true); }, 1200);
+// সাইড প্যানেলের "help.ums মেইল" → Dashboard-এর মেইল কার্ড
+document.addEventListener('click', function (e) {
+  if (!e.target.closest || !e.target.closest('[data-mailgo]')) return;
+  setView('dash');
+  setTimeout(function () { var c = $('mailCard'); if (c) window.scrollTo(0, c.getBoundingClientRect().top + window.scrollY - 80); }, 60);
+});
 function monthData() {
   var d = new Date(), out = [];
   for (var i = 11; i >= 0; i--) {
