@@ -6,6 +6,9 @@
 
 ## 2026-11-04
 
+### UUU Task Tracker — Release Notes-এ Platform ও Given By ফিল্টার
+- সার্চ বক্সের পাশে দুটো ড্রপডাউন ফিল্টার (শুধু নোটে ব্যবহৃত মান)
+
 ### UUU Task Tracker — Release Notes-এ Platform ও "নোট দিয়েছেন"
 - প্রতিটা নোটে Platform (একাধিক) আর কে নোট দিয়েছেন; সাইডবারে সংখ্যা বাদ
 
