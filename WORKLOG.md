@@ -6,6 +6,9 @@
 
 ## 2026-11-04
 
+### UUU Task Tracker — Release Notes-এ Platform ও "নোট দিয়েছেন"
+- প্রতিটা নোটে Platform (একাধিক) আর কে নোট দিয়েছেন; সাইডবারে সংখ্যা বাদ
+
 ### UUU Task Tracker — সাইডবারে "Release Notes" মেনু
 - `tasks/index.html` আপডেট: ডেভেলপারদের রিলিজ নোট কপি-পেস্ট করে সেভ (তারিখ, ঐচ্ছিক শিরোনাম, লেখা হুবহু), সার্চ, কপি/এডিট/মোছা
 - ডেটা Supabase-এ (`app.release_notes`)
