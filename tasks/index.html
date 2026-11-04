@@ -715,6 +715,26 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
 /* মুছে ফেলা টাস্ক */
 .btn.danger{color:var(--red);border-color:color-mix(in srgb,var(--red) 35%,var(--line-2))}
 .btn.danger:hover{background:var(--red-bg);color:var(--red)}
+.rn-form{margin-bottom:14px}
+.rn-form h4{margin:0 0 12px}
+.rn-frow{display:flex;gap:12px;flex-wrap:wrap}
+.rn-frow .fg{min-width:170px}
+.rn-grow{flex:1}
+.rn-form textarea{min-height:280px}
+.rn-fact{display:flex;gap:10px;flex-wrap:wrap}
+.rn-search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:14px;color:var(--ink-3)}
+.rn-search input{flex:1;min-width:0;border:0;background:transparent;padding:11px 0;font:inherit;color:var(--ink);outline:0}
+.rn-card{margin-bottom:14px}
+.rn-head{display:flex;gap:12px;align-items:flex-start}
+.rn-head .grow{flex:1;min-width:0}
+.rn-date{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--brand-text)}
+.rn-head h3{margin:4px 0 0;font-size:16px;overflow-wrap:anywhere}
+.rn-act{display:flex;gap:4px;flex-shrink:0}
+.rn-body{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:12px;font-size:14px;line-height:1.65;color:var(--ink)}
+.rn-body.clip{max-height:17em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 65%,transparent);mask-image:linear-gradient(#000 65%,transparent)}
+.rn-meta{margin-top:10px;font-size:12px;color:var(--ink-3)}
+.rn-empty{text-align:center;color:var(--ink-3);padding:36px 18px}
+.rn-empty b{display:block;color:var(--ink);margin-bottom:4px}
 .trash-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-2)}
 .trash-row{display:flex;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
 .trash-row:last-child{border-bottom:0}
@@ -970,6 +990,7 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
     <section id="view-report" class="hidden"></section>
     <section id="view-settings" class="hidden"></section>
     <section id="view-trash" class="hidden"></section>
+    <section id="view-notes" class="hidden"></section>
   </main>
 </div>
 
@@ -1138,6 +1159,7 @@ var I18N = {
     'd.delete': 'ডিলিট', 'del.confirm': '"{0}" টাস্কটি মুছে ফেলবেন? পরে "মুছে ফেলা" তালিকা থেকে ফেরত আনা যাবে।', 'del.done': 'টাস্ক মুছে ফেলা হয়েছে — "মুছে ফেলা" তালিকা থেকে ফেরত আনা যাবে',
     'del.restored': 'টাস্ক ফেরত আনা হয়েছে', 'del.purged': 'স্থায়ীভাবে মুছে ফেলা হয়েছে', 'del.purge.confirm': '"{0}" স্থায়ীভাবে মুছে যাবে, আর কখনো ফেরত আনা যাবে না। নিশ্চিত?',
     'trash.title': 'মুছে ফেলা', 'trash.sub': 'মুছে ফেলা টাস্ক কোনো তালিকা, সার্চ বা ড্যাশবোর্ডে দেখায় না। দরকার হলে এখান থেকে ফেরত আনুন।', 'trash.by': '{0} মুছেছেন · {1}',
+    'rn.title': 'Release Notes', 'rn.sub': 'ডেভেলপারদের দেওয়া ERP আপডেটের রিলিজ নোট — যেমন লেখা আছে তেমন পেস্ট করে রাখা', 'rn.new': 'নতুন রিলিজ নোট', 'rn.edit': 'রিলিজ নোট এডিট', 'rn.date': 'তারিখ', 'rn.ftitle': 'শিরোনাম (ঐচ্ছিক)', 'rn.ftitle.ph': 'যেমন: UMS Release', 'rn.body': 'রিলিজ নোট', 'rn.body.ph': 'ডেভেলপারদের দেওয়া রিলিজ নোট এখানে পেস্ট করুন…', 'rn.save': 'সেভ করুন', 'rn.search': 'রিলিজ নোটে খুঁজুন…', 'rn.loading': 'লোড হচ্ছে…', 'rn.empty': 'এখনো কোনো রিলিজ নোট নেই', 'rn.empty.d': '"নতুন রিলিজ নোট" চেপে ডেভেলপারদের নোট পেস্ট করে রাখুন।', 'rn.nomatch': 'কোনো নোটে মিল পাওয়া যায়নি', 'rn.more': 'পুরোটা দেখুন', 'rn.less': 'কম দেখুন', 'rn.by': '{0} যোগ করেছেন · {1}', 'rn.upd': '{0} বদলেছেন · {1}', 'rn.copy': 'কপি', 'rn.del': 'মুছুন', 'rn.confirmdel': '"{0}" রিলিজ নোটটি মুছে ফেলবেন?', 'rn.saved': 'রিলিজ নোট সেভ হয়েছে', 'rn.updated': 'রিলিজ নোট আপডেট হয়েছে', 'rn.deleted': 'রিলিজ নোট মুছে ফেলা হয়েছে',
     'trash.restore': 'ফেরত আনুন', 'trash.purge': 'স্থায়ীভাবে মুছুন', 'trash.empty': 'মুছে ফেলা কোনো টাস্ক নেই', 'log.deleted': 'টাস্ক মুছে ফেলা হয়েছে', 'log.restored': 'টাস্ক ফেরত আনা হয়েছে',
     'p.settings': 'সেটিংস ম্যানেজ', 'p.settings.d': 'অপশন লিস্ট ও অ্যাপ সেটিংস (ইউজার ও পারমিশন শুধু Admin)', 'p.saved': 'পারমিশন আপডেট হয়েছে',
     'g.title': 'অ্যাপ সেটিংস', 'g.sub': 'অ্যাপের নাম, নতুন টাস্কের ডিফল্ট মান, আবশ্যক ঘর ও প্রদর্শন।',
@@ -1274,6 +1296,7 @@ var I18N = {
     'd.delete': 'Delete', 'del.confirm': 'Delete the task "{0}"? It can be restored later from "Deleted".', 'del.done': 'Task deleted — it can be restored from "Deleted"',
     'del.restored': 'Task restored', 'del.purged': 'Permanently deleted', 'del.purge.confirm': '"{0}" will be permanently deleted and can never be restored. Continue?',
     'trash.title': 'Deleted', 'trash.sub': 'Deleted tasks are hidden from every list, search and dashboard. Restore them from here if needed.', 'trash.by': 'Deleted by {0} · {1}',
+    'rn.title': 'Release Notes', 'rn.sub': 'Release notes of ERP updates from the developers — saved exactly as pasted', 'rn.new': 'New release note', 'rn.edit': 'Edit release note', 'rn.date': 'Date', 'rn.ftitle': 'Title (optional)', 'rn.ftitle.ph': 'e.g. UMS Release', 'rn.body': 'Release note', 'rn.body.ph': 'Paste the release note from the developers here…', 'rn.save': 'Save', 'rn.search': 'Search release notes…', 'rn.loading': 'Loading…', 'rn.empty': 'No release notes yet', 'rn.empty.d': 'Click "New release note" and paste the developers’ note.', 'rn.nomatch': 'No note matches', 'rn.more': 'Show all', 'rn.less': 'Show less', 'rn.by': 'Added by {0} · {1}', 'rn.upd': 'edited by {0} · {1}', 'rn.copy': 'Copy', 'rn.del': 'Delete', 'rn.confirmdel': 'Delete the release note "{0}"?', 'rn.saved': 'Release note saved', 'rn.updated': 'Release note updated', 'rn.deleted': 'Release note deleted',
     'trash.restore': 'Restore', 'trash.purge': 'Delete permanently', 'trash.empty': 'No deleted tasks', 'log.deleted': 'Task deleted', 'log.restored': 'Task restored',
     'p.settings': 'Manage settings', 'p.settings.d': 'Option lists and app settings (users & permissions are Admin only)', 'p.saved': 'Permissions updated',
     'g.title': 'App settings', 'g.sub': 'App name, default values for new tasks, required fields and display.',
@@ -1768,7 +1791,8 @@ var NO_TOKEN = {requestLoginCode: true, verifyLoginCode: true};
 // আগের Apps Script ফাংশনের নাম → ডেটাবেসের RPC (আর্গুমেন্ট একই ক্রমে অ্যারে হিসেবে যায়)
 var RPC = {getBootstrap: 'get_bootstrap', getUpdates: 'get_updates', saveTask: 'save_task', setTaskStatus: 'set_task_status', addDiscussion: 'add_discussion',
   deleteTask: 'delete_task', restoreTask: 'restore_task', purgeTask: 'purge_task', importTasks: 'import_tasks', removeImportBatch: 'remove_import_batch',
-  saveSettings: 'save_settings', renameOption: 'rename_option', saveUsers: 'save_users', savePrefs: 'save_prefs', getArchive: 'get_archive', getMailDash: 'get_mail_dash'};
+  saveSettings: 'save_settings', renameOption: 'rename_option', saveUsers: 'save_users', savePrefs: 'save_prefs', getArchive: 'get_archive', getMailDash: 'get_mail_dash',
+  getReleaseNotes: 'get_release_notes', saveReleaseNote: 'save_release_note', deleteReleaseNote: 'delete_release_note'};
 // Supabase Auth-এর ইংরেজি এরর → বাংলা
 function authErr(e) {
   var m = String((e && e.message) || e || '');
@@ -2218,6 +2242,7 @@ function renderSide(counts) {
     '<h6>' + T('side.tasks') + '</h6>' + tabBtns +
     '<h6>' + T('side.analysis') + '</h6>' +
     '<button class="nav-item' + (ui.view === 'dash' ? ' active' : '') + '" data-view="dash">' + ic('chart') + T('nav.dash') + '</button>' +
+    '<button class="nav-item' + (ui.view === 'notes' ? ' active' : '') + '" data-view="notes">' + ic('file') + T('rn.title') + (RN && RN.list ? '<span class="n">' + RN.list.length + '</span>' : '') + '</button>' +
     ((can('settings') || can('delete')) ? '<h6>' + T('side.admin') + '</h6>' : '') +
     (can('settings') ? '<button class="nav-item' + (ui.view === 'settings' ? ' active' : '') + '" data-view="settings">' + ic('gear') + T('side.settings') + '</button>' : '') +
     (can('delete') ? '<button class="nav-item' + (ui.view === 'trash' ? ' active' : '') + '" data-view="trash">' + ic('trash') + T('trash.title') + '<span class="n">' + trash.length + '</span></button>' : '') +
@@ -3363,17 +3388,112 @@ function renderTrash() {
     (rows ? '<div class="trash-list">' + rows + '</div>' : '<div class="trash-list"><div class="empty"><div class="big">' + ic('trash') + '</div><b>' + T('trash.empty') + '</b></div></div>');
 }
 
+/* ======================= Release Notes ======================= */
+// ডেভেলপারদের পাঠানো রিলিজ নোট — যেমন লেখা আছে তেমন পেস্ট করে সেভ (কোনো ভাগ/ম্যাপিং নেই)।
+// লাইভে ডেটাবেসে (getReleaseNotes/saveReleaseNote/deleteReleaseNote), ডেমোতে এই ব্রাউজারে (store.notes)।
+var RN = {list: null, edit: null, q: '', open: {}};
+function rnApi(fn, arg) {
+  if (IS_LIVE) return api(fn, arg);
+  var L = store.notes || (store.notes = []), now = nowIso();
+  if (fn === 'getReleaseNotes') return Promise.resolve({notes: L.slice()});
+  if (fn === 'deleteReleaseNote') { store.notes = L.filter(function (x) { return x.id !== arg; }); saveStore(); return Promise.resolve({ok: true}); }
+  var n = Object.assign({}, arg, {updatedAt: now, updatedBy: me().name});
+  if (n.id) { store.notes = L.map(function (x) { return x.id === n.id ? Object.assign({}, x, n) : x; }); n = store.notes.filter(function (x) { return x.id === n.id; })[0]; }
+  else { n.id = Date.now(); n.createdAt = now; n.createdBy = me().name; store.notes = L.concat([n]); }
+  saveStore();
+  return Promise.resolve({note: n});
+}
+function rnSorted() {
+  return (RN.list || []).slice().sort(function (a, b) { return (b.date || '') !== (a.date || '') ? ((b.date || '') < (a.date || '') ? -1 : 1) : ((b.createdAt || '') < (a.createdAt || '') ? -1 : 1); });
+}
+function rnLoad() {
+  return rnApi('getReleaseNotes').then(function (r) {
+    var nl = (r && r.notes) || [], changed = JSON.stringify(nl) !== JSON.stringify(RN.list);
+    RN.list = nl;
+    if (changed && ui.view === 'notes') { renderSide(null); if (RN.edit) renderNotesList(); else renderNotes(); }
+  }, function (e) { if (RN.list === null) RN.list = []; opErr(e); if (ui.view === 'notes') renderNotes(); });
+}
+function renderNotes() {
+  renderSide(null);
+  var e = RN.edit;
+  $('view-notes').innerHTML =
+    '<div class="ph"><div class="grow"><h1>' + T('rn.title') + (RN.list ? '<span class="cnt">' + RN.list.length + '</span>' : '') + '</h1><p>' + T('rn.sub') + '</p></div>' +
+    (can('add') && !e ? '<button class="btn primary" data-rn="new">' + ic('plus', 'sm') + T('rn.new') + '</button>' : '') + '</div>' +
+    (e ? '<div class="card rn-form"><h4>' + T(e.id ? 'rn.edit' : 'rn.new') + '</h4>' +
+      '<div class="rn-frow"><div class="fg"><label>' + T('rn.date') + '</label><input type="date" id="rnDate" value="' + esc(e.date || '') + '"></div>' +
+      '<div class="fg rn-grow"><label>' + T('rn.ftitle') + '</label><input id="rnTitle" maxlength="200" value="' + esc(e.title || '') + '" placeholder="' + esc(T('rn.ftitle.ph')) + '"></div></div>' +
+      '<div class="fg"><label>' + T('rn.body') + '</label><textarea id="rnBody" placeholder="' + esc(T('rn.body.ph')) + '">' + esc(e.body || '') + '</textarea></div>' +
+      '<div class="rn-fact"><button class="btn primary" data-rn="save" id="rnSave">' + ic('check', 'sm') + T('rn.save') + '</button><button class="btn" data-rn="cancel">' + T('frm.cancel') + '</button></div></div>' : '') +
+    (RN.list && RN.list.length ? '<div class="rn-search">' + ic('search', 'sm') + '<input id="rnQ" value="' + esc(RN.q) + '" placeholder="' + esc(T('rn.search')) + '"></div>' : '') +
+    '<div id="rnList"></div>';
+  renderNotesList();
+  if (e) setTimeout(function () { var b = $('rnBody'); if (b && !b.value) b.focus(); }, 30);
+}
+function renderNotesList() {
+  var box = $('rnList'); if (!box) return;
+  if (RN.list === null) { box.innerHTML = '<div class="card rn-empty">' + T('rn.loading') + '</div>'; return; }
+  var q = RN.q.trim().toLowerCase();
+  var list = rnSorted().filter(function (n) { return !q || ((n.title || '') + '\n' + (n.body || '')).toLowerCase().indexOf(q) !== -1; });
+  if (!list.length) {
+    box.innerHTML = '<div class="card rn-empty"><div class="big">' + ic('file') + '</div><b>' + T(q ? 'rn.nomatch' : 'rn.empty') + '</b>' + (q ? '' : T('rn.empty.d')) + '</div>';
+    return;
+  }
+  box.innerHTML = list.map(function (n) {
+    var body = n.body || '', long = body.length > 900 || body.split('\n').length > 14, open = RN.open[n.id];
+    return '<article class="card rn-card"><div class="rn-head"><div class="grow"><div class="rn-date">' + ic('cal', 'sm') + esc(fmtDate(n.date)) + '</div>' +
+      (n.title ? '<h3>' + esc(n.title) + '</h3>' : '') + '</div><div class="rn-act">' +
+      '<button class="icon-btn" data-rn="copy" data-id="' + n.id + '" title="' + esc(T('rn.copy')) + '">' + ic('copy', 'sm') + '</button>' +
+      (can('edit') ? '<button class="icon-btn" data-rn="edit" data-id="' + n.id + '" title="' + esc(T('rn.edit')) + '">' + ic('edit', 'sm') + '</button>' : '') +
+      (can('delete') ? '<button class="icon-btn" data-rn="del" data-id="' + n.id + '" title="' + esc(T('rn.del')) + '">' + ic('trash', 'sm') + '</button>' : '') +
+      '</div></div><div class="rn-body' + (long && !open ? ' clip' : '') + '">' + esc(body) + '</div>' +
+      (long ? '<button class="linkbtn" data-rn="more" data-id="' + n.id + '">' + T(open ? 'rn.less' : 'rn.more') + '</button>' : '') +
+      '<div class="rn-meta">' + T('rn.by', esc(n.createdBy || '—'), esc(fmtDate(n.createdAt, true))) +
+      (n.updatedAt && n.updatedAt !== n.createdAt ? ' · ' + T('rn.upd', esc(n.updatedBy || '—'), esc(fmtDate(n.updatedAt, true))) : '') + '</div></article>';
+  }).join('');
+}
+function rnFind(id) { return (RN.list || []).filter(function (x) { return String(x.id) === String(id); })[0]; }
+$('view-notes').addEventListener('input', function (e) {
+  if (e.target.id === 'rnQ') { RN.q = e.target.value; renderNotesList(); }
+  if (e.target.id === 'rnBody') e.target.classList.remove('invalid');
+});
+$('view-notes').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-rn]'); if (!b) return;
+  var act = b.getAttribute('data-rn'), n = rnFind(b.getAttribute('data-id'));
+  if (act === 'new') { RN.edit = {date: dayStr(0), title: '', body: ''}; renderNotes(); return; }
+  if (act === 'edit' && n) { RN.edit = Object.assign({}, n); renderNotes(); window.scrollTo(0, 0); return; }
+  if (act === 'cancel') { RN.edit = null; renderNotes(); return; }
+  if (act === 'more' && n) { RN.open[n.id] = !RN.open[n.id]; renderNotesList(); return; }
+  if (act === 'copy' && n) { copyText((n.title ? n.title + '\n' : '') + fmtDate(n.date) + '\n\n' + n.body); return; }
+  if (act === 'del' && n) {
+    if (!confirm(T('rn.confirmdel', n.title || fmtDate(n.date)))) return;
+    rnApi('deleteReleaseNote', n.id).then(function () { RN.list = RN.list.filter(function (x) { return x.id !== n.id; }); renderNotes(); toast(T('rn.deleted')); }, opErr);
+    return;
+  }
+  if (act === 'save') {
+    var body = $('rnBody'), txt = body.value.replace(/\s+$/, '');
+    if (!txt.trim()) { body.classList.add('invalid'); body.focus(); return; } // খালি হলে শুধু লাল বর্ডার
+    var note = Object.assign({}, RN.edit, {date: $('rnDate').value || dayStr(0), title: $('rnTitle').value.trim(), body: txt});
+    b.disabled = true;
+    rnApi('saveReleaseNote', note).then(function (r) {
+      var sn = r.note, had = rnFind(sn.id);
+      RN.list = had ? RN.list.map(function (x) { return String(x.id) === String(sn.id) ? sn : x; }) : RN.list.concat([sn]);
+      RN.edit = null; RN.q = ''; renderNotes(); toast(T(had ? 'rn.updated' : 'rn.saved'));
+    }, function (er) { b.disabled = false; opErr(er); });
+  }
+});
+
 /* ======================= ভিউ ও ইউজার ======================= */
 function setView(v) {
   if (v === 'settings' && !can('settings')) v = 'list';
   if (v === 'trash' && !can('delete')) v = 'list';
   ui.view = v; saveUi();
-  ['list', 'dash', 'report', 'settings', 'trash'].forEach(function (k) { $('view-' + k).classList.toggle('hidden', k !== v); });
+  ['list', 'dash', 'report', 'settings', 'trash', 'notes'].forEach(function (k) { $('view-' + k).classList.toggle('hidden', k !== v); });
   document.querySelectorAll('#bottomnav button[data-view]').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-view') === v); });
   if (v === 'dash') renderDash();
   if (v === 'report') renderReport();
   if (v === 'settings') renderSettings();
   if (v === 'trash') renderTrash();
+  if (v === 'notes') { renderNotes(); rnLoad(); }
   if (v === 'list') renderList();
   window.scrollTo(0, 0);
 }
@@ -3387,6 +3507,7 @@ function renderUser() {
       ? '<div class="um-me"><span class="avatar" style="background:var(--ink-3)">?</span><div><b>' + T('guest') + '</b><small>' + T('lg.guest.sub') + '</small></div></div><hr>' +
         '<button data-login>' + ic('key') + '<b>' + T('lg.btn') + '</b></button>'
       : '<div class="um-me">' + avatar(u.name) + '<div><b>' + esc(u.name) + '</b><small>' + esc(u.email || '') + ' · ' + u.role + '</small></div></div><hr>') +
+    '<button data-view="notes">' + ic('file') + T('rn.title') + '</button>' +
     (can('settings') ? '<button data-view="settings">' + ic('gear') + T('side.settings') + '</button>' : '') +
     (can('delete') ? '<button data-view="trash">' + ic('trash') + T('trash.title') + ' (' + trash.length + ')</button>' : '') +
     '<button data-lang-toggle>' + ic('globe') + T('um.lang') + '</button>' +
