@@ -82,7 +82,7 @@ a{color:var(--blue)}
 .gsearch{flex:1;min-width:0;max-width:none;position:relative;margin:0 6px}
 .gsearch input{width:100%;height:44px;border-radius:12px;font-size:15px!important;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.13);color:#fff;padding:0 70px 0 40px;outline:none;font-size:14.5px;transition:.15s}
 .gsearch input::placeholder{color:rgba(255,255,255,.72)}
-.gsearch input:focus{background:#fff;color:var(--ink);border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.gsearch input:focus{background:#fff;color:#141625;caret-color:#141625;border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
 .gsearch input:focus::placeholder{color:#9aa0b2}
 .gsearch .ico{position:absolute;left:14px;top:13px;color:rgba(255,255,255,.8);pointer-events:none}
 .gsearch input:focus ~ .ico{color:#80869A}
@@ -90,7 +90,7 @@ a{color:var(--blue)}
 .gsearch .s-clear{position:absolute;right:9px;top:9px;width:26px;height:26px;border:0;border-radius:50%;background:#fff;color:var(--brand-strong);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.18);transition:transform .12s,background .12s}
 .gsearch .s-clear .ico{width:15px;height:15px;stroke-width:2.8;position:static;color:inherit}
 .gsearch .s-clear:hover{transform:scale(1.08)}
-.gsearch input:focus ~ .s-clear{background:var(--ink-2);color:#fff;box-shadow:none}
+.gsearch input:focus ~ .s-clear{background:#5A6075;color:#fff;box-shadow:none}
 .gsearch .s-clear:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .topbar .spacer{flex:1;display:none}
 .lang-btn{display:flex;align-items:center;gap:6px;height:38px;border-radius:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:700;font-size:13px;padding:0 11px;white-space:nowrap}
@@ -726,8 +726,10 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
 .rn-search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;color:var(--ink-3)}
 .rn-tools .sel select{height:100%;min-height:44px;min-width:170px;max-width:240px}
 .rn-tools .sel .ico{top:50%;margin-top:-7px}
+.rn-clear{min-height:44px}
+.rn-clear[disabled]{opacity:.45;cursor:default}
 .rn-tools .sel select.on{border-color:var(--brand);color:var(--brand-text)}
-@media (max-width:899px){.rn-search{flex-basis:100%}.rn-tools .sel{flex:1 1 0;min-width:0}.rn-tools .sel select{min-width:0;max-width:none;width:100%}}
+@media (max-width:899px){.rn-search{flex-basis:100%}.rn-clear{flex-basis:100%;justify-content:center}.rn-tools .sel{flex:1 1 0;min-width:0}.rn-tools .sel select{min-width:0;max-width:none;width:100%}}
 .rn-search input{flex:1;min-width:0;border:0;background:transparent;padding:11px 0;font:inherit;color:var(--ink);outline:0}
 .rn-card{margin-bottom:14px}
 .rn-head{display:flex;gap:12px;align-items:flex-start}
@@ -829,7 +831,7 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
   .toolbar #btnCsv{display:none!important}
   .toolbar .sel select{width:100%}
   .msearch{display:block;position:relative;margin-bottom:10px}
-  .msearch input{width:100%;height:46px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);padding:0 44px 0 42px;font-size:16px;outline:none;box-shadow:var(--sh-2)}
+  .msearch input{width:100%;height:46px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);color:var(--ink);padding:0 44px 0 42px;font-size:16px;outline:none;box-shadow:var(--sh-2)}
   .msearch input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
   .msearch .ico{position:absolute;left:13px;top:14px;color:var(--ink-3)}
   .msearch .s-clear{position:absolute;right:9px;top:10px;width:26px;height:26px;border:0;border-radius:50%;background:var(--ink-2);color:var(--surface);display:grid;place-items:center}
@@ -1166,7 +1168,7 @@ var I18N = {
     'd.delete': 'ডিলিট', 'del.confirm': '"{0}" টাস্কটি মুছে ফেলবেন? পরে "মুছে ফেলা" তালিকা থেকে ফেরত আনা যাবে।', 'del.done': 'টাস্ক মুছে ফেলা হয়েছে — "মুছে ফেলা" তালিকা থেকে ফেরত আনা যাবে',
     'del.restored': 'টাস্ক ফেরত আনা হয়েছে', 'del.purged': 'স্থায়ীভাবে মুছে ফেলা হয়েছে', 'del.purge.confirm': '"{0}" স্থায়ীভাবে মুছে যাবে, আর কখনো ফেরত আনা যাবে না। নিশ্চিত?',
     'trash.title': 'মুছে ফেলা', 'trash.sub': 'মুছে ফেলা টাস্ক কোনো তালিকা, সার্চ বা ড্যাশবোর্ডে দেখায় না। দরকার হলে এখান থেকে ফেরত আনুন।', 'trash.by': '{0} মুছেছেন · {1}',
-    'rn.title': 'Release Notes', 'rn.sub': 'ডেভেলপারদের দেওয়া ERP আপডেটের রিলিজ নোট — যেমন লেখা আছে তেমন পেস্ট করে রাখা', 'rn.new': 'নতুন রিলিজ নোট', 'rn.edit': 'রিলিজ নোট এডিট', 'rn.date': 'তারিখ', 'rn.f.plat': 'সব Platform', 'rn.f.given': 'সবাই (Given By)', 'rn.given': 'নোট দিয়েছেন', 'rn.given.ph': 'যেমন: ডেভেলপার/টিমের নাম', 'rn.given.by': 'দিয়েছেন: {0}', 'rn.ftitle': 'শিরোনাম (ঐচ্ছিক)', 'rn.ftitle.ph': 'যেমন: UMS Release', 'rn.body': 'রিলিজ নোট', 'rn.body.ph': 'ডেভেলপারদের দেওয়া রিলিজ নোট এখানে পেস্ট করুন…', 'rn.save': 'সেভ করুন', 'rn.search': 'রিলিজ নোটে খুঁজুন…', 'rn.loading': 'লোড হচ্ছে…', 'rn.empty': 'এখনো কোনো রিলিজ নোট নেই', 'rn.empty.d': '"নতুন রিলিজ নোট" চেপে ডেভেলপারদের নোট পেস্ট করে রাখুন।', 'rn.nomatch': 'কোনো নোটে মিল পাওয়া যায়নি', 'rn.more': 'পুরোটা দেখুন', 'rn.less': 'কম দেখুন', 'rn.by': '{0} যোগ করেছেন · {1}', 'rn.upd': '{0} বদলেছেন · {1}', 'rn.copy': 'কপি', 'rn.del': 'মুছুন', 'rn.confirmdel': '"{0}" রিলিজ নোটটি মুছে ফেলবেন?', 'rn.saved': 'রিলিজ নোট সেভ হয়েছে', 'rn.updated': 'রিলিজ নোট আপডেট হয়েছে', 'rn.deleted': 'রিলিজ নোট মুছে ফেলা হয়েছে',
+    'rn.title': 'Release Notes', 'rn.sub': 'ডেভেলপারদের দেওয়া ERP আপডেটের রিলিজ নোট — যেমন লেখা আছে তেমন পেস্ট করে রাখা', 'rn.new': 'নতুন রিলিজ নোট', 'rn.edit': 'রিলিজ নোট এডিট', 'rn.date': 'তারিখ', 'rn.f.plat': 'সব Platform', 'rn.f.clear': 'Clear Filter', 'rn.f.given': 'সবাই (Given By)', 'rn.given': 'নোট দিয়েছেন', 'rn.given.ph': 'যেমন: ডেভেলপার/টিমের নাম', 'rn.given.by': 'দিয়েছেন: {0}', 'rn.ftitle': 'শিরোনাম (ঐচ্ছিক)', 'rn.ftitle.ph': 'যেমন: UMS Release', 'rn.body': 'রিলিজ নোট', 'rn.body.ph': 'ডেভেলপারদের দেওয়া রিলিজ নোট এখানে পেস্ট করুন…', 'rn.save': 'সেভ করুন', 'rn.search': 'রিলিজ নোটে খুঁজুন…', 'rn.loading': 'লোড হচ্ছে…', 'rn.empty': 'এখনো কোনো রিলিজ নোট নেই', 'rn.empty.d': '"নতুন রিলিজ নোট" চেপে ডেভেলপারদের নোট পেস্ট করে রাখুন।', 'rn.nomatch': 'কোনো নোটে মিল পাওয়া যায়নি', 'rn.more': 'পুরোটা দেখুন', 'rn.less': 'কম দেখুন', 'rn.by': '{0} যোগ করেছেন · {1}', 'rn.upd': '{0} বদলেছেন · {1}', 'rn.copy': 'কপি', 'rn.del': 'মুছুন', 'rn.confirmdel': '"{0}" রিলিজ নোটটি মুছে ফেলবেন?', 'rn.saved': 'রিলিজ নোট সেভ হয়েছে', 'rn.updated': 'রিলিজ নোট আপডেট হয়েছে', 'rn.deleted': 'রিলিজ নোট মুছে ফেলা হয়েছে',
     'trash.restore': 'ফেরত আনুন', 'trash.purge': 'স্থায়ীভাবে মুছুন', 'trash.empty': 'মুছে ফেলা কোনো টাস্ক নেই', 'log.deleted': 'টাস্ক মুছে ফেলা হয়েছে', 'log.restored': 'টাস্ক ফেরত আনা হয়েছে',
     'p.settings': 'সেটিংস ম্যানেজ', 'p.settings.d': 'অপশন লিস্ট ও অ্যাপ সেটিংস (ইউজার ও পারমিশন শুধু Admin)', 'p.saved': 'পারমিশন আপডেট হয়েছে',
     'g.title': 'অ্যাপ সেটিংস', 'g.sub': 'অ্যাপের নাম, নতুন টাস্কের ডিফল্ট মান, আবশ্যক ঘর ও প্রদর্শন।',
@@ -1303,7 +1305,7 @@ var I18N = {
     'd.delete': 'Delete', 'del.confirm': 'Delete the task "{0}"? It can be restored later from "Deleted".', 'del.done': 'Task deleted — it can be restored from "Deleted"',
     'del.restored': 'Task restored', 'del.purged': 'Permanently deleted', 'del.purge.confirm': '"{0}" will be permanently deleted and can never be restored. Continue?',
     'trash.title': 'Deleted', 'trash.sub': 'Deleted tasks are hidden from every list, search and dashboard. Restore them from here if needed.', 'trash.by': 'Deleted by {0} · {1}',
-    'rn.title': 'Release Notes', 'rn.sub': 'Release notes of ERP updates from the developers — saved exactly as pasted', 'rn.new': 'New release note', 'rn.edit': 'Edit release note', 'rn.date': 'Date', 'rn.f.plat': 'All platforms', 'rn.f.given': 'Anyone (Given by)', 'rn.given': 'Given by', 'rn.given.ph': 'e.g. developer / team name', 'rn.given.by': 'Given by {0}', 'rn.ftitle': 'Title (optional)', 'rn.ftitle.ph': 'e.g. UMS Release', 'rn.body': 'Release note', 'rn.body.ph': 'Paste the release note from the developers here…', 'rn.save': 'Save', 'rn.search': 'Search release notes…', 'rn.loading': 'Loading…', 'rn.empty': 'No release notes yet', 'rn.empty.d': 'Click "New release note" and paste the developers’ note.', 'rn.nomatch': 'No note matches', 'rn.more': 'Show all', 'rn.less': 'Show less', 'rn.by': 'Added by {0} · {1}', 'rn.upd': 'edited by {0} · {1}', 'rn.copy': 'Copy', 'rn.del': 'Delete', 'rn.confirmdel': 'Delete the release note "{0}"?', 'rn.saved': 'Release note saved', 'rn.updated': 'Release note updated', 'rn.deleted': 'Release note deleted',
+    'rn.title': 'Release Notes', 'rn.sub': 'Release notes of ERP updates from the developers — saved exactly as pasted', 'rn.new': 'New release note', 'rn.edit': 'Edit release note', 'rn.date': 'Date', 'rn.f.plat': 'All platforms', 'rn.f.clear': 'Clear Filter', 'rn.f.given': 'Anyone (Given by)', 'rn.given': 'Given by', 'rn.given.ph': 'e.g. developer / team name', 'rn.given.by': 'Given by {0}', 'rn.ftitle': 'Title (optional)', 'rn.ftitle.ph': 'e.g. UMS Release', 'rn.body': 'Release note', 'rn.body.ph': 'Paste the release note from the developers here…', 'rn.save': 'Save', 'rn.search': 'Search release notes…', 'rn.loading': 'Loading…', 'rn.empty': 'No release notes yet', 'rn.empty.d': 'Click "New release note" and paste the developers’ note.', 'rn.nomatch': 'No note matches', 'rn.more': 'Show all', 'rn.less': 'Show less', 'rn.by': 'Added by {0} · {1}', 'rn.upd': 'edited by {0} · {1}', 'rn.copy': 'Copy', 'rn.del': 'Delete', 'rn.confirmdel': 'Delete the release note "{0}"?', 'rn.saved': 'Release note saved', 'rn.updated': 'Release note updated', 'rn.deleted': 'Release note deleted',
     'trash.restore': 'Restore', 'trash.purge': 'Delete permanently', 'trash.empty': 'No deleted tasks', 'log.deleted': 'Task deleted', 'log.restored': 'Task restored',
     'p.settings': 'Manage settings', 'p.settings.d': 'Option lists and app settings (users & permissions are Admin only)', 'p.saved': 'Permissions updated',
     'g.title': 'App settings', 'g.sub': 'App name, default values for new tasks, required fields and display.',
@@ -3457,13 +3459,15 @@ function renderNotes() {
       '<div class="fg"><label>' + T('rn.body') + '</label><textarea id="rnBody" placeholder="' + esc(T('rn.body.ph')) + '">' + esc(e.body || '') + '</textarea></div>' +
       '<div class="rn-fact"><button class="btn primary" data-rn="save" id="rnSave">' + ic('check', 'sm') + T('rn.save') + '</button><button class="btn" data-rn="cancel">' + T('frm.cancel') + '</button></div></div>' : '') +
     (RN.list && RN.list.length ? '<div class="rn-tools"><div class="rn-search">' + ic('search', 'sm') + '<input id="rnQ" value="' + esc(RN.q) + '" placeholder="' + esc(T('rn.search')) + '"></div>' +
-      rnFilterSel('rnFP', T('rn.f.plat'), rnUsedPlats(), RN.fp) + rnFilterSel('rnFG', T('rn.f.given'), rnGivenNames(), RN.fg) + '</div>' : '') +
+      rnFilterSel('rnFP', T('rn.f.plat'), rnUsedPlats(), RN.fp) + rnFilterSel('rnFG', T('rn.f.given'), rnGivenNames(), RN.fg) +
+      '<button class="btn rn-clear" data-rn="clear"' + (RN.q || RN.fp || RN.fg ? '' : ' disabled') + '>' + ic('close', 'sm') + T('rn.f.clear') + '</button></div>' : '') +
     '<div id="rnList"></div>';
   renderNotesList();
   if (e) setTimeout(function () { var b = $('rnBody'); if (b && !b.value) b.focus(); }, 30);
 }
 function renderNotesList() {
   var box = $('rnList'); if (!box) return;
+  var cb = document.querySelector('#view-notes .rn-clear'); if (cb) cb.disabled = !(RN.q || RN.fp || RN.fg);
   if (RN.list === null) { box.innerHTML = '<div class="card rn-empty">' + T('rn.loading') + '</div>'; return; }
   var q = RN.q.trim().toLowerCase();
   var list = rnSorted().filter(function (n) {
@@ -3504,6 +3508,7 @@ $('view-notes').addEventListener('click', function (e) {
   if (act === 'new') { RN.edit = {date: dayStr(0), title: '', body: ''}; renderNotes(); return; }
   if (act === 'edit' && n) { RN.edit = Object.assign({}, n); renderNotes(); window.scrollTo(0, 0); return; }
   if (act === 'cancel') { RN.edit = null; renderNotes(); return; }
+  if (act === 'clear') { RN.q = ''; RN.fp = ''; RN.fg = ''; renderNotes(); return; }
   if (act === 'more' && n) { RN.open[n.id] = !RN.open[n.id]; renderNotesList(); return; }
   if (act === 'copy' && n) { copyText((n.title ? n.title + '\n' : '') + fmtDate(n.date) + (n.platform ? ' · ' + n.platform : '') + (n.givenBy ? '\n' + T('rn.given') + ': ' + n.givenBy : '') + '\n\n' + n.body); return; }
   if (act === 'del' && n) {

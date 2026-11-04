@@ -6,6 +6,10 @@
 
 ## 2026-11-04
 
+### UUU Task Tracker — Clear Filter ও সার্চ বক্সের লেখা
+- Release Notes ফিল্টারের শেষে "Clear Filter" বোতাম
+- ডার্ক মোডে উপরের সার্চ বক্সে টাইপ করা লেখা দেখা যেত না — ঠিক করা হয়েছে
+
 ### UUU Task Tracker — Release Notes-এ Platform ও Given By ফিল্টার
 - সার্চ বক্সের পাশে দুটো ড্রপডাউন ফিল্টার (শুধু নোটে ব্যবহৃত মান)
 
