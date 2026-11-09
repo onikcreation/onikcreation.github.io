@@ -687,6 +687,74 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
 .md-cr input{height:40px;border:1px solid var(--line-2);border-radius:10px;padding:0 9px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;width:100%;min-width:0}
 .md-res{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:9px;padding:7px 10px}
 .md-res b{color:var(--ink)}
+/* ডেস্কটপ প্যানেল লেআউট */
+.kt{display:none}
+@media (min-width:900px){
+  html[data-dlayout="kcards"] .side,html[data-dlayout="khero"] .side,html[data-dlayout="kchips"] .side{display:none}
+  html[data-dlayout="kcards"] .shell,html[data-dlayout="khero"] .shell,html[data-dlayout="kchips"] .shell{grid-template-columns:minmax(0,1fr)}
+  html[data-dlayout="kcards"] .kt,html[data-dlayout="khero"] .kt,html[data-dlayout="kchips"] .kt{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
+}
+.kt-nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.kt-nav>button{display:inline-flex;align-items:center;gap:7px;border:0;background:none;border-radius:9px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.kt-nav>button:hover{background:var(--surface-2);color:var(--ink)}
+.kt-nav>button.on{background:var(--brand-soft);color:var(--brand-text)}
+.kt-nav>button .n{font-size:12px;font-weight:700;color:var(--ink-3)}
+.kt-nav>button .mail-n{color:#fff;background:#E5484D;border-radius:999px;padding:0 7px;line-height:19px;min-width:19px;text-align:center}
+.kt-nav .sep{width:1px;height:20px;background:var(--line-2);margin:0 4px}
+.kt-foot{margin-left:auto;min-width:0;max-width:52%;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kt-foot b{color:var(--ink-2);font-weight:600}
+.kt-foot button{flex:0 0 auto;border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.kt-a{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.kc{position:relative;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 13px 10px 15px;color:var(--ink-2);box-shadow:var(--sh-1);overflow:hidden;transition:border-color .12s,transform .12s}
+.kc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.kc:hover{border-color:var(--c);transform:translateY(-1px)}
+.kc small{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kc b{display:block;font-size:24px;font-weight:800;color:var(--ink);line-height:1.15;margin-top:4px;font-variant-numeric:tabular-nums}
+.kc.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface));box-shadow:0 0 0 1px var(--c)}
+.kc.on small{color:var(--ink)}
+.kt-b{display:grid;grid-template-columns:260px minmax(0,1fr);gap:12px}
+.kb-hero{display:flex;flex-direction:column;align-items:stretch;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,color-mix(in srgb,var(--brand) 26%,var(--surface)),var(--surface));text-align:left;color:var(--ink-2)}
+.kb-hero.on{box-shadow:0 0 0 2px var(--brand)}
+.kb-hero small{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.kb-hero b{display:block;font-size:40px;font-weight:800;color:var(--ink);line-height:1.1;margin:4px 0 8px;font-variant-numeric:tabular-nums}
+.kb-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--surface-3)}
+.kb-bar i{display:block;height:100%}
+.kb-leg{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px}
+.kb-leg span{display:inline-flex;align-items:center;gap:5px}
+.kb-leg i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.kb-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kb-g{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:10px 12px}
+.kb-g h6{margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-3)}
+.kb-g button{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;border-radius:8px;padding:5px 7px;font-size:13.5px;font-weight:600;color:var(--ink-2);text-align:left}
+.kb-g button:hover{background:var(--surface-2)}
+.kb-g button.on{background:color-mix(in srgb,var(--c) 16%,var(--surface));color:var(--ink)}
+.kb-g button i{width:8px;height:8px;border-radius:50%;background:var(--c);flex:0 0 auto}
+.kb-g button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kb-g button b{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
+.kt-c{display:flex;gap:8px;flex-wrap:wrap;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.kt-c .pchip{height:34px}
+.kt-c .pchip i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.kt-c .pchip.on{background:var(--c);border-color:var(--c);color:#fff}
+.kt-c .pchip.on small{color:#fff;opacity:.9}
+.kt-c .pchip.on i{background:#fff}
+.kt-c .vsep{width:1px;background:var(--line-2);margin:4px 2px}
+.dl-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:759px){.dl-cards{grid-template-columns:repeat(2,1fr)}}
+.dl-prev{height:62px;border-radius:9px;border:1px solid var(--line);background:var(--bg);display:grid;grid-template-rows:auto 1fr;gap:3px;padding:5px;overflow:hidden}
+.dl-prev.p-side{grid-template-rows:none;grid-template-columns:24% 1fr}
+.dl-prev i{display:block;border-radius:3px}
+.dl-side{display:flex;flex-direction:column;gap:3px;padding:3px;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.dl-side i{height:4px;background:var(--ink-3);opacity:.5}
+.dl-rows{display:flex;flex-direction:column;gap:3px}
+.dl-rows i{height:7px;background:var(--surface);border:1px solid var(--line)}
+.dl-k{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.dl-k i{height:14px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brand)}
+.dl-h{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:3px}
+.dl-h b{display:block;height:20px;border-radius:3px;background:color-mix(in srgb,var(--brand) 40%,var(--surface))}
+.dl-h i{height:20px;background:var(--surface);border:1px solid var(--line)}
+.dl-c{display:flex;gap:3px;padding:3px;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.dl-c i{flex:1;height:6px;border-radius:99px;background:var(--line-2)}
+.dl-c i:first-child{background:var(--brand)}
 .ml-prev{display:flex;flex-direction:column;gap:3px;padding:6px;border-radius:9px;background:var(--bg);border:1px solid var(--line);min-height:62px}
 .ml-prev .c{display:flex;gap:3px;height:20px;border-radius:5px;background:color-mix(in srgb,var(--brand) 12%,var(--surface));border:1px solid color-mix(in srgb,var(--brand) 25%,var(--line));padding:3px}
 .ml-prev .c i{flex:1;border-radius:2px;background:var(--brand);opacity:.35}
@@ -963,6 +1031,7 @@ html[data-tint] .row.has-pr{transition:border-color .12s}
 <div class="shell">
   <aside class="side" id="side"></aside>
   <main>
+    <div class="kt" id="kpiTop"></div>
     <section id="view-list">
       <div class="msearch">
         <input id="qm" class="qinput" type="search" data-i18n-ph="search.ph.m" autocomplete="off" enterkeyhint="search">
@@ -1082,7 +1151,7 @@ var I18N = {
     'rel.today': 'আজ', 'rel.yesterday': 'গতকাল', 'rel.days': '{0} দিন আগে', 'rel.nodate': 'তারিখ নেই',
     'f.priority': 'Priority', 'f.platform': 'Platform', 'f.type': 'Type', 'f.dept': 'বিভাগ', 'f.entry': 'এন্ট্রি', 'f.progress': 'Progress',
     'pr.title': 'এন্ট্রির সময়', 'pr.all': 'সব সময়', 'pr.today': 'আজ', 'pr.yday': 'গতকাল', 'pr.week': 'এই সপ্তাহ', 'pr.month': 'এই মাস', 'pr.lmonth': 'গত মাস', 'pr.h.all': 'সময়ের বাছাই বন্ধ — সব সময়ের টাস্ক', 'pr.h.today': 'আজ যোগ হওয়া টাস্ক', 'pr.h.yday': 'গতকাল যোগ হওয়া টাস্ক', 'pr.h.week': 'এই সপ্তাহের শনিবার থেকে আজ পর্যন্ত যোগ হওয়া টাস্ক', 'pr.h.month': 'এই মাসের ১ তারিখ থেকে আজ পর্যন্ত যোগ হওয়া টাস্ক', 'pr.h.lmonth': 'আগের মাসে যোগ হওয়া টাস্ক', 'pr.l.today': 'আজকের এন্ট্রি', 'pr.l.yday': 'গতকালের এন্ট্রি', 'pr.l.week': 'এই সপ্তাহের এন্ট্রি', 'pr.l.month': 'এই মাসের এন্ট্রি', 'pr.l.lmonth': 'গত মাসের এন্ট্রি', 'csv.t': 'Excel ডাউনলোড', 'csv.sub': 'ডাউনলোডের আগে একবার দেখে নিন', 'csv.n': '{0}টি টাস্ক ডাউনলোড হবে', 'csv.none': 'এই তালিকায় কোনো টাস্ক নেই', 'csv.h': 'তালিকায় এখন যা দেখছেন ঠিক সেগুলোই ফাইলে যাবে (Excel-এ খোলা যায়)।', 'csv.c.tab': 'ট্যাব', 'csv.c.nf': '{0}টি চালু', 'csv.c.q': 'সার্চ', 'csv.go': 'ডাউনলোড করুন', 't.updated.moved': 'আপডেট হয়েছে — "{0}" ট্যাবে সরেছে', 'chd.title': 'এই মাসে প্রতিদিনের এন্ট্রি', 'chd.sub': '{0} · তারিখ অনুযায়ী, প্রতিটা টাস্ক এখন কোন অবস্থায় · বারে চাপলে সেই দিনের টাস্ক দেখাবে', 'chd.sum': 'এ পর্যন্ত মোট {0} · দিনে গড় {1}', 'chd.best': 'সবচেয়ে বেশি {0} ({1}টি)', 'chd.click': 'চাপলে এই দিনের টাস্ক দেখাবে', 'chd.date': 'তারিখ', 'chd.none': 'এই মাসে এখনো কোনো এন্ট্রি নেই।', 'chd.aria': 'এই মাসের প্রতিদিন কতগুলো টাস্ক এন্ট্রি হয়েছে, অবস্থা অনুযায়ী ভাগ করা',
-    'chd.title.l': 'গত মাসে প্রতিদিনের এন্ট্রি', 'chd.sum.l': 'মোট {0} · দিনে গড় {1}', 'chd.none.l': 'গত মাসে কোনো এন্ট্রি নেই।', 'chd.aria.l': 'গত মাসের প্রতিদিন কতগুলো টাস্ক এন্ট্রি হয়েছে, অবস্থা অনুযায়ী ভাগ করা', 'wd': 'রবি,সোম,মঙ্গল,বুধ,বৃহস্পতি,শুক্র,শনি', 'grp.title': 'তালিকা ভাগ করে দেখাও', 'grp.none': 'Group By: কিছু না', 'grp.type': 'Group By: Task Type', 'grp.priority': 'Group By: Priority', 'grp.platform': 'Group By: Platform', 'grp.urg': '{0}: {1}', 'th.gstyle': 'ভাগ করে দেখানোর ধরন', 'th.line': 'শিরোনাম-রেখা', 'th.panel': 'আলাদা প্যানেল', 'th.gstyle.h': 'তালিকায় "Group By: Task Type" ইত্যাদি বাছলে ভাগগুলো এভাবে দেখাবে।', 'dr.lbl': 'তারিখ', 'dr.res': 'এই সময়ে {0}টি টাস্ক', 'dr.pick': 'শুরু আর শেষ তারিখ বাছুন', 'dr.clear': 'মুছুন', 'dr.from': '{0} থেকে', 'dr.to': '{0} পর্যন্ত', 'ms.of': 'মোট {0}-এর মধ্যে', 'ms.all': 'সব অবস্থা দেখাও', 'ms.bar': 'Pending: লাল = জরুরি, বাকিটা অবস্থা অনুযায়ী', 'md.title': 'Entry Date', 'md.sub': 'টাস্ক কবে যোগ হয়েছে', 'md.n': '{0}টি', 'md.custom': 'নির্দিষ্ট তারিখ', 'md.apply': 'দেখাও', 'grp.lbl': 'Group By', 'sort.lbl': 'সাজানো', 'sort.s.new': 'নতুন আগে', 'sort.s.old': 'পুরনো আগে', 'sort.s.pri': 'Priority', 'sort.s.upd': 'আপডেট', 'grp.v.none': 'কিছু না', 'grp.v.type': 'Task Type', 'grp.v.priority': 'Priority', 'grp.v.platform': 'Platform', 'th.mlayout': 'মোবাইল লেআউট', 'th.summary': 'নতুন — সারাংশ কার্ড', 'th.classic': 'আগের — টাইল', 'th.mlayout.h': 'শুধু মোবাইলে প্রযোজ্য।', 'th.mark': 'তালিকার শুরুতে চিহ্ন (ডেস্কটপ)', 'th.on': 'দেখাও', 'th.off': 'দেখিও না', 'th.mark.st': 'কোন Status-এ', 'th.mark.pr': 'কোন Priority-তে', 'th.mark.h': 'বাছা Status বা Priority-র টাস্কের বাম পাশে খাড়া চিহ্ন দেখায়, কার্ড একটু ডানে সরে। দুটোই মিললে দুটো চিহ্ন পাশাপাশি।', 'g.markst': 'চিহ্ন — Status', 'g.markpr': 'চিহ্ন — Priority', 'f.from': 'থেকে', 'f.to': 'পর্যন্ত', 'f.duponly': 'শুধু ডুপ্লিকেট', 'f.clearall': 'সব মুছুন', 'f.blank': '(খালি)',
+    'chd.title.l': 'গত মাসে প্রতিদিনের এন্ট্রি', 'chd.sum.l': 'মোট {0} · দিনে গড় {1}', 'chd.none.l': 'গত মাসে কোনো এন্ট্রি নেই।', 'chd.aria.l': 'গত মাসের প্রতিদিন কতগুলো টাস্ক এন্ট্রি হয়েছে, অবস্থা অনুযায়ী ভাগ করা', 'wd': 'রবি,সোম,মঙ্গল,বুধ,বৃহস্পতি,শুক্র,শনি', 'grp.title': 'তালিকা ভাগ করে দেখাও', 'grp.none': 'Group By: কিছু না', 'grp.type': 'Group By: Task Type', 'grp.priority': 'Group By: Priority', 'grp.platform': 'Group By: Platform', 'grp.urg': '{0}: {1}', 'th.gstyle': 'ভাগ করে দেখানোর ধরন', 'th.line': 'শিরোনাম-রেখা', 'th.panel': 'আলাদা প্যানেল', 'th.gstyle.h': 'তালিকায় "Group By: Task Type" ইত্যাদি বাছলে ভাগগুলো এভাবে দেখাবে।', 'dr.lbl': 'তারিখ', 'dr.res': 'এই সময়ে {0}টি টাস্ক', 'dr.pick': 'শুরু আর শেষ তারিখ বাছুন', 'dr.clear': 'মুছুন', 'dr.from': '{0} থেকে', 'dr.to': '{0} পর্যন্ত', 'ms.of': 'মোট {0}-এর মধ্যে', 'ms.all': 'সব অবস্থা দেখাও', 'ms.bar': 'Pending: লাল = জরুরি, বাকিটা অবস্থা অনুযায়ী', 'md.title': 'Entry Date', 'md.sub': 'টাস্ক কবে যোগ হয়েছে', 'md.n': '{0}টি', 'md.custom': 'নির্দিষ্ট তারিখ', 'md.apply': 'দেখাও', 'grp.lbl': 'Group By', 'sort.lbl': 'সাজানো', 'sort.s.new': 'নতুন আগে', 'sort.s.old': 'পুরনো আগে', 'sort.s.pri': 'Priority', 'sort.s.upd': 'আপডেট', 'grp.v.none': 'কিছু না', 'grp.v.type': 'Task Type', 'grp.v.priority': 'Priority', 'grp.v.platform': 'Platform', 'th.mlayout': 'মোবাইল লেআউট', 'th.dlayout': 'প্যানেল লেআউট (ডেস্কটপ)', 'th.side': 'বাম প্যানেল', 'th.kcards': 'উপরে কার্ড', 'th.khero': 'উপরে Pending বড়', 'th.kchips': 'উপরে চিপ বার', 'th.dlayout.h': 'বাম প্যানেলের টাস্ক-সংখ্যা উপরে দেখায়, তালিকা পুরো চওড়া জায়গা পায়। শুধু বড় স্ক্রিনে, মোবাইলে আগের মতোই।', 'kt.run': 'চলমান', 'kt.other': 'অন্যান্য অবস্থা', 'kt.views': 'বিশেষ ট্যাব', 'th.summary': 'নতুন — সারাংশ কার্ড', 'th.classic': 'আগের — টাইল', 'th.mlayout.h': 'শুধু মোবাইলে প্রযোজ্য।', 'th.mark': 'তালিকার শুরুতে চিহ্ন (ডেস্কটপ)', 'th.on': 'দেখাও', 'th.off': 'দেখিও না', 'th.mark.st': 'কোন Status-এ', 'th.mark.pr': 'কোন Priority-তে', 'th.mark.h': 'বাছা Status বা Priority-র টাস্কের বাম পাশে খাড়া চিহ্ন দেখায়, কার্ড একটু ডানে সরে। দুটোই মিললে দুটো চিহ্ন পাশাপাশি।', 'g.markst': 'চিহ্ন — Status', 'g.markpr': 'চিহ্ন — Priority', 'f.from': 'থেকে', 'f.to': 'পর্যন্ত', 'f.duponly': 'শুধু ডুপ্লিকেট', 'f.clearall': 'সব মুছুন', 'f.blank': '(খালি)',
     'fs.title': 'ফিল্টার', 'fs.tab': 'বর্তমান ট্যাব: {0}', 'fs.dept': 'Issued By — বিভাগ', 'fs.date': 'এন্ট্রির তারিখ', 'fs.other': 'অন্যান্য',
     'fs.duponly': '⚠ শুধু ডুপ্লিকেট Task No.', 'fs.show': '{0}টি টাস্ক দেখাও',
     'd.noTeams': 'Teams Task No. নেই', 'd.prev': 'আগের টাস্ক (←)', 'd.next': 'পরের টাস্ক (→)', 'd.status': 'Status', 'd.status.ro': ' · আপনার রোলে বদলানো যাবে না',
@@ -1219,7 +1288,7 @@ var I18N = {
     'rel.today': 'Today', 'rel.yesterday': 'Yesterday', 'rel.days': '{0} days ago', 'rel.nodate': 'No date',
     'f.priority': 'Priority', 'f.platform': 'Platform', 'f.type': 'Type', 'f.dept': 'Department', 'f.entry': 'Entry', 'f.progress': 'Progress',
     'pr.title': 'Entry time', 'pr.all': 'All Time', 'pr.today': 'Today', 'pr.yday': 'Yesterday', 'pr.week': 'This Week', 'pr.month': 'This Month', 'pr.lmonth': 'Last Month', 'pr.h.all': 'No time limit — tasks from any time', 'pr.h.today': 'Tasks added today', 'pr.h.yday': 'Tasks added yesterday', 'pr.h.week': 'Tasks added since Saturday this week', 'pr.h.month': 'Tasks added since the 1st of this month', 'pr.h.lmonth': 'Tasks added last month', 'pr.l.today': "Today's entries", 'pr.l.yday': "Yesterday's entries", 'pr.l.week': "This week's entries", 'pr.l.month': "This month's entries", 'pr.l.lmonth': "Last month's entries", 'csv.t': 'Download Excel', 'csv.sub': 'Check before downloading', 'csv.n': '{0} task(s) will be downloaded', 'csv.none': 'No tasks in this list', 'csv.h': 'Exactly the tasks in the current list go into the file (opens in Excel).', 'csv.c.tab': 'Tab', 'csv.c.nf': '{0} active', 'csv.c.q': 'Search', 'csv.go': 'Download', 't.updated.moved': 'Updated — moved to "{0}"', 'chd.title': 'Tasks entered this month', 'chd.sub': '{0} · by entry date, current state of each task · click a bar to see that day\'s tasks', 'chd.sum': 'Total so far {0} · {1} per day', 'chd.best': 'busiest {0} ({1})', 'chd.click': 'Click to see this day\'s tasks', 'chd.date': 'Date', 'chd.none': 'No entries this month yet.', 'chd.aria': 'Tasks entered each day this month, split by current state',
-    'chd.title.l': 'Tasks entered last month', 'chd.sum.l': 'Total {0} · {1} per day', 'chd.none.l': 'No entries last month.', 'chd.aria.l': 'Tasks entered each day last month, split by current state', 'wd': 'Sun,Mon,Tue,Wed,Thu,Fri,Sat', 'grp.title': 'Group the list', 'grp.none': 'Group By: None', 'grp.type': 'Group By: Task Type', 'grp.priority': 'Group By: Priority', 'grp.platform': 'Group By: Platform', 'grp.urg': '{0}: {1}', 'th.gstyle': 'Group style', 'th.line': 'Header line', 'th.panel': 'Separate panel', 'th.gstyle.h': 'How groups look when the list is grouped (e.g. "Group By: Task Type").', 'dr.lbl': 'Date', 'dr.res': '{0} task(s) in this range', 'dr.pick': 'Pick a start and end date', 'dr.clear': 'Clear', 'dr.from': 'From {0}', 'dr.to': 'Until {0}', 'ms.of': 'Out of {0} tasks', 'ms.all': 'View all statuses', 'ms.bar': 'Pending: red = urgent, the rest by status', 'md.title': 'Entry Date', 'md.sub': 'When the task was added', 'md.n': '{0} tasks', 'md.custom': 'Custom Date Range', 'md.apply': 'Apply', 'grp.lbl': 'Group By', 'sort.lbl': 'Sort', 'sort.s.new': 'Newest', 'sort.s.old': 'Oldest', 'sort.s.pri': 'Priority', 'sort.s.upd': 'Updated', 'grp.v.none': 'None', 'grp.v.type': 'Task Type', 'grp.v.priority': 'Priority', 'grp.v.platform': 'Platform', 'th.mlayout': 'Mobile layout', 'th.summary': 'New — summary card', 'th.classic': 'Classic — tiles', 'th.mlayout.h': 'Applies on mobile only.', 'th.mark': 'Side labels in the list (desktop)', 'th.on': 'Show', 'th.off': 'Hide', 'th.mark.st': 'For these statuses', 'th.mark.pr': 'For these priorities', 'th.mark.h': 'Tasks with a chosen status or priority get a vertical label on the left and shift right. If both match, two labels sit side by side.', 'g.markst': 'Side label — Status', 'g.markpr': 'Side label — Priority', 'f.from': 'From', 'f.to': 'To', 'f.duponly': 'Duplicates only', 'f.clearall': 'Clear all', 'f.blank': '(blank)',
+    'chd.title.l': 'Tasks entered last month', 'chd.sum.l': 'Total {0} · {1} per day', 'chd.none.l': 'No entries last month.', 'chd.aria.l': 'Tasks entered each day last month, split by current state', 'wd': 'Sun,Mon,Tue,Wed,Thu,Fri,Sat', 'grp.title': 'Group the list', 'grp.none': 'Group By: None', 'grp.type': 'Group By: Task Type', 'grp.priority': 'Group By: Priority', 'grp.platform': 'Group By: Platform', 'grp.urg': '{0}: {1}', 'th.gstyle': 'Group style', 'th.line': 'Header line', 'th.panel': 'Separate panel', 'th.gstyle.h': 'How groups look when the list is grouped (e.g. "Group By: Task Type").', 'dr.lbl': 'Date', 'dr.res': '{0} task(s) in this range', 'dr.pick': 'Pick a start and end date', 'dr.clear': 'Clear', 'dr.from': 'From {0}', 'dr.to': 'Until {0}', 'ms.of': 'Out of {0} tasks', 'ms.all': 'View all statuses', 'ms.bar': 'Pending: red = urgent, the rest by status', 'md.title': 'Entry Date', 'md.sub': 'When the task was added', 'md.n': '{0} tasks', 'md.custom': 'Custom Date Range', 'md.apply': 'Apply', 'grp.lbl': 'Group By', 'sort.lbl': 'Sort', 'sort.s.new': 'Newest', 'sort.s.old': 'Oldest', 'sort.s.pri': 'Priority', 'sort.s.upd': 'Updated', 'grp.v.none': 'None', 'grp.v.type': 'Task Type', 'grp.v.priority': 'Priority', 'grp.v.platform': 'Platform', 'th.mlayout': 'Mobile layout', 'th.dlayout': 'Panel layout (desktop)', 'th.side': 'Left panel', 'th.kcards': 'Top cards', 'th.khero': 'Top, Pending large', 'th.kchips': 'Top chip bar', 'th.dlayout.h': 'Shows the task counts from the left panel at the top so the list gets the full width. Large screens only; mobile stays the same.', 'kt.run': 'In progress', 'kt.other': 'Other states', 'kt.views': 'Special tabs', 'th.summary': 'New — summary card', 'th.classic': 'Classic — tiles', 'th.mlayout.h': 'Applies on mobile only.', 'th.mark': 'Side labels in the list (desktop)', 'th.on': 'Show', 'th.off': 'Hide', 'th.mark.st': 'For these statuses', 'th.mark.pr': 'For these priorities', 'th.mark.h': 'Tasks with a chosen status or priority get a vertical label on the left and shift right. If both match, two labels sit side by side.', 'g.markst': 'Side label — Status', 'g.markpr': 'Side label — Priority', 'f.from': 'From', 'f.to': 'To', 'f.duponly': 'Duplicates only', 'f.clearall': 'Clear all', 'f.blank': '(blank)',
     'fs.title': 'Filters', 'fs.tab': 'Current tab: {0}', 'fs.dept': 'Issued By — Department', 'fs.date': 'Entry date', 'fs.other': 'Other',
     'fs.duponly': '⚠ Duplicate Task No. only', 'fs.show': 'Show {0} tasks',
     'd.noTeams': 'No Teams Task No.', 'd.prev': 'Previous task (←)', 'd.next': 'Next task (→)', 'd.status': 'Status', 'd.status.ro': ' · your role cannot change it',
@@ -1394,7 +1463,7 @@ var ROLES = ['Admin', 'Editor', 'Viewer'];
 function defaultGeneral() {
   return {appName: 'Task Tracker', appSub: '', defaults: {priority: '', status: 'Pending', type: '', platform: 'UMS'},
     required: {title: false, priority: true, type: true, platform: true, menu: false, taskNo: false, issuedDept: false}, pageSize: 60, defaultLang: 'bn', defaultAccent: 'indigo',
-    defaultMode: 'system', defaultTint: 'soft', defaultDensity: 'comfortable', defaultSize: 'md', defaultGroupStyle: 'line', defaultMobileLayout: 'summary',
+    defaultMode: 'system', defaultTint: 'soft', defaultDensity: 'comfortable', defaultSize: 'md', defaultGroupStyle: 'line', defaultMobileLayout: 'summary', defaultDeskLayout: 'side',
     defaultMarkOn: 'on', defaultMarkStatus: ['Done'], defaultMarkPriority: ['Urgent']};
 }
 function defaultPerms() {
@@ -1530,12 +1599,12 @@ var ACCENTS = {
 // টাস্কের রং: none = শুধু বামের দাগ (আগের মতো), soft = A, fade = B, frame = C, urgent = D
 var TINTS = ['none', 'soft', 'fade', 'frame', 'urgent'];
 // ডিফল্ট থিম Admin ঠিক করে (সেটিংস → সাধারণ → ডিফল্ট থিম)
-var TH_OPTS = {mode: ['light', 'dark', 'system'], density: ['comfortable', 'compact'], size: ['sm', 'md', 'lg'], gstyle: ['line', 'panel'], mlayout: ['summary', 'classic'], mark: ['on', 'off']};
+var TH_OPTS = {mode: ['light', 'dark', 'system'], density: ['comfortable', 'compact'], size: ['sm', 'md', 'lg'], gstyle: ['line', 'panel'], mlayout: ['summary', 'classic'], mark: ['on', 'off'], dlayout: ['side', 'kcards', 'khero', 'kchips']};
 function pickOpt(v, list, d) { return list.indexOf(v) !== -1 ? v : d; }
 function defaultTheme() {
   var g = store.settings.general || {};
   return {mode: pickOpt(g.defaultMode, TH_OPTS.mode, 'system'), accent: ACCENTS[g.defaultAccent] ? g.defaultAccent : 'indigo',
-    density: pickOpt(g.defaultDensity, TH_OPTS.density, 'comfortable'), size: pickOpt(g.defaultSize, TH_OPTS.size, 'md'), tint: pickOpt(g.defaultTint, TINTS, 'soft'), gstyle: pickOpt(g.defaultGroupStyle, TH_OPTS.gstyle, 'line'), mlayout: pickOpt(g.defaultMobileLayout, TH_OPTS.mlayout, 'summary'),
+    density: pickOpt(g.defaultDensity, TH_OPTS.density, 'comfortable'), size: pickOpt(g.defaultSize, TH_OPTS.size, 'md'), tint: pickOpt(g.defaultTint, TINTS, 'soft'), gstyle: pickOpt(g.defaultGroupStyle, TH_OPTS.gstyle, 'line'), mlayout: pickOpt(g.defaultMobileLayout, TH_OPTS.mlayout, 'summary'), dlayout: pickOpt(g.defaultDeskLayout, TH_OPTS.dlayout, 'side'),
     mark: pickOpt(g.defaultMarkOn, TH_OPTS.mark, 'on'), markSt: Array.isArray(g.defaultMarkStatus) ? g.defaultMarkStatus.slice() : ['Done'], markPr: Array.isArray(g.defaultMarkPriority) ? g.defaultMarkPriority.slice() : ['Urgent']};
 }
 // ইউজার নিজে যা বদলেছে শুধু সেটুকু (v:2)। বাকি সব Admin-এর ডিফল্ট মানে — Admin বদলালে সেগুলোও বদলায়।
@@ -1564,6 +1633,8 @@ function applyTheme() {
   if (TINTS.indexOf(p.tint) > 0) root.setAttribute('data-tint', p.tint); else root.removeAttribute('data-tint');
   root.setAttribute('data-gstyle', p.gstyle === 'panel' ? 'panel' : 'line');
   root.setAttribute('data-mlayout', p.mlayout === 'classic' ? 'classic' : 'summary');
+  var dl = root.getAttribute('data-dlayout'); root.setAttribute('data-dlayout', p.dlayout);
+  if (dl && dl !== p.dlayout && typeof renderKpiTop === 'function') renderKpiTop();
   if (typeof ctlLabels === 'function') ctlLabels();
   if (p.size === 'md') root.removeAttribute('data-size'); else root.setAttribute('data-size', p.size);
   var meta = document.querySelector('meta[name=theme-color]'); if (meta) meta.setAttribute('content', A.l[0]);
@@ -1596,6 +1667,13 @@ function renderThemeModal() {
     '<div class="d-body">' +
     '<div class="th-sec"><h5>' + T('th.mode') + '</h5><div class="th-cards">' + card('light') + card('dark') + card('system') + '</div></div>' +
     '<div class="th-sec"><h5>' + T('th.accent') + '</h5><div class="th-swatches">' + sw + '</div></div>' +
+    '<div class="th-sec"><h5>' + T('th.dlayout') + '</h5><div class="dl-cards">' + TH_OPTS.dlayout.map(function (k) {
+      var pv = {side: '<span class="dl-side"><i></i><i></i><i></i><i></i><i></i></span><span class="dl-rows"><i></i><i></i><i></i></span>',
+        kcards: '<span class="dl-k"><i></i><i></i><i></i><i></i><i></i></span><span class="dl-rows"><i></i><i></i></span>',
+        khero: '<span class="dl-h"><b></b><i></i><i></i><i></i></span><span class="dl-rows"><i></i><i></i></span>',
+        kchips: '<span class="dl-c"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="dl-rows"><i></i><i></i><i></i></span>'}[k];
+      return '<button class="th-card' + (p.dlayout === k ? ' on' : '') + '" data-th="dlayout|' + k + '"><span class="dl-prev p-' + k + '">' + pv + '</span>' + T('th.' + k) + '</button>';
+    }).join('') + '</div><div class="hint" style="margin-top:6px">' + T('th.dlayout.h') + '</div></div>' +
     '<div class="th-sec"><h5>' + T('th.tint') + '</h5><div class="tp-cards">' + TINTS.map(function (k) {
       var cols = listOf('priority').slice(0, 3).map(function (o, i) { return '<i class="has-pr' + (i < 2 ? ' pr-hi' : ' pr-mid') + '" style="--stripe:' + o.color + '"></i>'; }).join('');
       return '<button class="th-card' + (p.tint === k ? ' on' : '') + '" data-th="tint|' + k + '"><span class="tp-prev" data-t="' + k + '">' + cols + '<i></i></span>' + T('tn.' + k) + '</button>';
@@ -2260,6 +2338,51 @@ function renderSide(counts) {
     (can('settings') ? '<button class="nav-item' + (ui.view === 'settings' ? ' active' : '') + '" data-view="settings">' + ic('gear') + T('side.settings') + '</button>' : '') +
     (can('delete') ? '<button class="nav-item' + (ui.view === 'trash' ? ' active' : '') + '" data-view="trash">' + ic('trash') + T('trash.title') + '<span class="n">' + trash.length + '</span></button>' : '') +
     '<div class="side-card">' + T('side.sync', esc(fmtDate(lastSync, true))) + '<br><button data-refresh>' + T('um.refresh') + '</button></div>';
+  renderKpiTop(counts);
+}
+/* ---- ডেস্কটপ: বাম প্যানেলের বদলে উপরে KPI (থিম → প্যানেল লেআউট) ----
+   kcards = কার্ড সারি, khero = Pending বড় + গ্রুপ, kchips = এক লাইনের চিপ। বাকি মেনু উপরে এক সারিতে; বাম প্যানেলের নিচের কার্ড ডানে ছোট করে। */
+function renderKpiTop(counts) {
+  var el = $('kpiTop'); if (!el) return;
+  var L = themePrefs().dlayout;
+  if (L === 'side' || !TABS || !TABS.length) { el.innerHTML = ''; return; }
+  if (!counts) { counts = {}; TABS.forEach(function (tb) { counts[tb.k] = tasks.filter(tb.fn).length; }); }
+  var on = function (k) { return ui.view === 'list' && ui.tab === k; };
+  var nb = function (attr, icon, label, act, extra) { return '<button ' + attr + (act ? ' class="on"' : '') + '>' + ic(icon) + label + (extra || '') + '</button>'; };
+  var card = $('side') && $('side').querySelector('.side-card');
+  var foot = card ? card.innerHTML.replace(/(<br>)+/g, ' · ') : '';
+  var nav = '<div class="kt-nav">' +
+    nb('data-view="dash"', 'chart', T('nav.dash'), ui.view === 'dash') +
+    nb('data-view="notes"', 'file', T('rn.title'), ui.view === 'notes') +
+    (mailCardOn() ? nb('data-mailgo title="' + esc(T('mail.badge.t')) + '"', 'mail', T('mail.title'), false, mailBadgeHtml()) : '') +
+    nb('data-view="report"', 'file', T('side.report'), ui.view === 'report') +
+    ((can('settings') || can('delete')) ? '<span class="sep"></span>' : '') +
+    (can('settings') ? nb('data-view="settings"', 'gear', T('side.settings'), ui.view === 'settings') : '') +
+    (can('delete') ? nb('data-view="trash"', 'trash', T('trash.title'), ui.view === 'trash', '<span class="n">' + trash.length + '</span>') : '') +
+    '<div class="kt-foot" title="' + esc((card && card.textContent) || '') + '">' + foot + '</div></div>';
+  var html = '';
+  if (L === 'kcards') {
+    html = '<div class="kt-a">' + TABS.map(function (tb) {
+      return '<button class="kc' + (on(tb.k) ? ' on' : '') + '" data-tab="' + esc(tb.k) + '" title="' + esc(tb.desc || '') + '" style="--c:' + tb.color + '"><small>' + esc(tb.label) + '</small><b>' + counts[tb.k] + '</b></button>';
+    }).join('') + '</div>';
+  } else if (L === 'khero') {
+    var grpOf = {}; listOf('status').forEach(function (o) { grpOf['s:' + o.name] = o.group; });
+    var st = TABS.filter(function (t) { return /^s:/.test(t.k); }), openSt = st.filter(function (t) { return grpOf[t.k] === 'open'; });
+    var rest = st.filter(function (t) { return grpOf[t.k] !== 'open'; }).concat(TABS.filter(function (t) { return t.k === 'all'; }));
+    var run = TABS.filter(function (t) { return t.k === 'urgent'; }).concat(openSt), views = TABS.filter(function (t) { return /^v:/.test(t.k); });
+    var openN = counts.open || 0, segs = openSt.map(function (t) { return [counts[t.k] || 0, t.color, t.label]; }).filter(function (x) { return x[0]; });
+    var row = function (t) { return '<button class="' + (on(t.k) ? 'on' : '') + '" data-tab="' + esc(t.k) + '" title="' + esc(t.desc || '') + '" style="--c:' + t.color + '"><i></i><span>' + esc(t.label) + '</span><b>' + counts[t.k] + '</b></button>'; };
+    var grp = function (lab, list) { return list.length ? '<div class="kb-g"><h6>' + lab + '</h6>' + list.map(row).join('') + '</div>' : ''; };
+    html = '<div class="kt-b"><button class="kb-hero' + (on('open') ? ' on' : '') + '" data-tab="open" title="' + esc(TABS[0].desc || '') + '"><small>' + esc(TABS[0].label) + '</small><b>' + openN + '</b>' +
+      '<span class="kb-bar">' + segs.map(function (x) { return '<i style="width:' + (x[0] / (openN || 1) * 100).toFixed(2) + '%;background:' + x[1] + '"></i>'; }).join('') + '</span>' +
+      '<span class="kb-leg">' + segs.map(function (x) { return '<span style="--c:' + x[1] + '"><i></i>' + esc(x[2]) + ' ' + x[0] + '</span>'; }).join('') + '</span></button>' +
+      '<div class="kb-groups">' + grp(T('kt.run'), run) + grp(T('kt.other'), rest) + grp(T('kt.views'), views) + '</div></div>';
+  } else {
+    var chip = function (t) { return '<button class="pchip' + (on(t.k) ? ' on' : '') + '" data-tab="' + esc(t.k) + '" title="' + esc(t.desc || '') + '" style="--c:' + t.color + '"><i></i>' + esc(t.label) + ' <small>' + counts[t.k] + '</small></button>'; };
+    var mainT = TABS.filter(function (t) { return !/^v:/.test(t.k); }), vw = TABS.filter(function (t) { return /^v:/.test(t.k); });
+    html = '<div class="kt-c">' + mainT.map(chip).join('') + (vw.length ? '<span class="vsep"></span>' + vw.map(chip).join('') : '') + '</div>';
+  }
+  el.innerHTML = nav + html;
 }
 /* ---- মোবাইল সারাংশ কার্ড (নতুন লেআউট): খোলা কাজ | Urgent + খোলা অবস্থাগুলো + বার | সব অবস্থা ---- */
 var msumOpen = false;
@@ -3001,8 +3124,9 @@ function mailBadgeHtml() { var n = MAIL_BADGE && MAIL_BADGE.n; return n > 0 ? '<
 function setMailUnread(n) {
   n = typeof n === 'number' ? n : null;
   MAIL_BADGE.n = n; MAIL_BADGE.at = Date.now();
-  var b = document.querySelector('#side [data-mailgo]');
-  if (b) { var old = b.querySelector('.mail-n'); if (old) old.remove(); if (n > 0) b.insertAdjacentHTML('beforeend', mailBadgeHtml()); }
+  Array.prototype.forEach.call(document.querySelectorAll('#side [data-mailgo],#kpiTop [data-mailgo]'), function (b) {
+    var old = b.querySelector('.mail-n'); if (old) old.remove(); if (n > 0) b.insertAdjacentHTML('beforeend', mailBadgeHtml());
+  });
   var bn = $('bnMail'); if (bn) { bn.textContent = n > 99 ? '99+' : (n || ''); bn.classList.toggle('hidden', !(mailCardOn() && n > 0)); }
   document.title = mailTitle();
 }
@@ -3236,7 +3360,7 @@ function generalPanel() {
     '<div class="fg"><label>' + T('g.defaccent') + '</label><select data-gfield="defaultAccent">' + Object.keys(ACCENTS).map(function (k) { return '<option value="' + k + '"' + ((g.defaultAccent || 'indigo') === k ? ' selected' : '') + '>' + T('ac.' + k) + '</option>'; }).join('') + '</select></div>' +
     (function () {
       var d = defaultTheme(), sel = function (f, key, opts, lab) { return '<div class="fg"><label>' + T(lab) + '</label><select data-gfield="' + f + '">' + opts.map(function (o) { return '<option value="' + o + '"' + (d[key] === o ? ' selected' : '') + '>' + T((key === 'tint' ? 'tn.' : 'th.') + o) + '</option>'; }).join('') + '</select></div>'; };
-      return sel('defaultMode', 'mode', TH_OPTS.mode, 'th.mode') + sel('defaultTint', 'tint', TINTS, 'th.tint') + sel('defaultDensity', 'density', TH_OPTS.density, 'th.density') + sel('defaultSize', 'size', TH_OPTS.size, 'th.size') + sel('defaultGroupStyle', 'gstyle', TH_OPTS.gstyle, 'th.gstyle') + sel('defaultMobileLayout', 'mlayout', TH_OPTS.mlayout, 'th.mlayout') + sel('defaultMarkOn', 'mark', TH_OPTS.mark, 'th.mark') +
+      return sel('defaultMode', 'mode', TH_OPTS.mode, 'th.mode') + sel('defaultTint', 'tint', TINTS, 'th.tint') + sel('defaultDensity', 'density', TH_OPTS.density, 'th.density') + sel('defaultSize', 'size', TH_OPTS.size, 'th.size') + sel('defaultGroupStyle', 'gstyle', TH_OPTS.gstyle, 'th.gstyle') + sel('defaultMobileLayout', 'mlayout', TH_OPTS.mlayout, 'th.mlayout') + sel('defaultDeskLayout', 'dlayout', TH_OPTS.dlayout, 'th.dlayout') + sel('defaultMarkOn', 'mark', TH_OPTS.mark, 'th.mark') +
         [['defaultMarkStatus', 'status', 'g.markst'], ['defaultMarkPriority', 'priority', 'g.markpr']].map(function (x) {
           var curL = Array.isArray(store.settings.general[x[0]]) ? store.settings.general[x[0]] : (x[0] === 'defaultMarkStatus' ? ['Done'] : ['Urgent']);
           return '<div class="fg full"><label>' + T(x[2]) + '</label><div class="mk-chips">' + listOf(x[1]).map(function (o) { return '<label><input type="checkbox" data-gmark="' + x[0] + '|' + esc(o.name) + '"' + (curL.indexOf(o.name) !== -1 ? ' checked' : '') + '>' + esc(optLabel(x[1], o.name)) + '</label>'; }).join('') + '</div></div>';
